@@ -1,0 +1,28 @@
+{
+  "$id": "child.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required":[
+    "firstName",
+    "lastName",
+    "age",
+    "persons"
+  ],
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "age": {
+      "type": "string"
+    },
+    "persons": {
+      "type": "array",
+      "items": {
+        "$ref": "person_info.schema.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$id": "firestation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "firestation",
+  "type": "array",
+  "items": {
+    "content": {
+      "application/json": {
+        "schema": {
+          "$ref": "firestation.schema.json"
+        }
+      }
+    }
+  }
+}

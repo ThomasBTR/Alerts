@@ -1,0 +1,22 @@
+{
+  "$id": "person_info.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required":[
+    "firstName",
+    "lastName",
+    "phone",
+    "address"
+  ],
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,583 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SafetyNet Alerts App",
+    "description": "SafetyNet Alerts App is design to help safety teams saving lives by providing updated data from their juridiction. This app will provide data on persons, their whereabouts when their is a danger.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/",
+      "description": "Basepath of the api"
+    }
+  ],
+  "paths": {
+    "/firestations": {
+      "post": {
+        "tags": [
+          "Add Firestations"
+        ],
+        "summary": "Add Firestations data to the database",
+        "operationId": "AddFirestationToDatabase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/firestations.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/firestation": {
+      "get": {
+        "tags": [
+          "Station Number"
+        ],
+        "summary": "Retourne la liste des personnes couverte par la caserne de pompier correspondante.",
+        "operationId": "getPersonsInfosFromFirestationID",
+        "parameters": [
+          {
+            "name": "stationNumber",
+            "in": "query",
+            "description": "firestation ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/GET/firestation.get.schema.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Station Number"
+        ],
+        "summary": "Add a mapping firestation for a specific address.",
+        "operationId": "AddFirestationMappingToSpecifiedAddress",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Station Number"
+        ],
+        "summary": "Update a mapping firestation for a specific address.",
+        "operationId": "UpdateFirestationMappingToSpecifiedAddress",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Station Number"
+        ],
+        "summary": "Delete a mapping firestation for a specific address.",
+        "operationId": "DeleteFirestationMappingToSpecifiedAddress",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/childAlert": {
+      "get": {
+        "tags": [
+          "Child Alert"
+        ],
+        "summary": "return a list of child living at this address",
+        "operationId": "getChildrenInfoFromAddress",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address where the childs live",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/GET/child_alert.get.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/phoneAlert": {
+      "get": {
+        "tags": [
+          "Phone Alert"
+        ],
+        "summary": "return a list of phone living in the area linked to this firestation",
+        "operationId": "getPhoneNumbersFromFirestationID",
+        "parameters": [
+          {
+            "name": "firestation",
+            "in": "query",
+            "description": "firestation ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/GET/phone_alert.get.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fire": {
+      "get": {
+        "tags": [
+          "Fire"
+        ],
+        "summary": "return a list of persons living at a specific address and the firestation ID linked to this address",
+        "operationId": "getPersonsInfosFromAddress",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "description": "address where the fire is started",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/GET/fire.get.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flood/station": {
+      "get": {
+        "tags": [
+          "Flood Station"
+        ],
+        "summary": "return data of persons linked to a firestation",
+        "operationId": "getAllPersonsInfosFromFirestationID",
+        "parameters": [
+          {
+            "name": "firestation",
+            "in": "query",
+            "description": "firestation ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "HTTP_Responses/GET/flood_station.get.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/personInfo": {
+      "get": {
+        "tags": [
+          "Person Info"
+        ],
+        "summary": "return a list of infos on a specific person",
+        "operationId": "GetPersonInfos",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "First Name of the person",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "description": "Last Name of the person",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "HTTP_Responses/GET/person_info.get.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/communityEmail": {
+      "get": {
+        "tags": [
+          "Community Email"
+        ],
+        "summary": "return a mailing list of the persons living in the city passed as parameter",
+        "operationId": "GetMailingListFromCity",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "description": "city from which the mailinglist is requested",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/GET/city_mailing_list.get.schema.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/medicalrecords": {
+      "post": {
+        "tags": [
+          "Add Medical Records"
+        ],
+        "summary": "Add Medical Records data to the database",
+        "operationId": "AddMedicalRecordsToDatabase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/medicalrecords.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/medicalRecord": {
+      "post": {
+        "tags": [
+          "Medical Record"
+        ],
+        "summary": "Add a medical record from a first name and last name",
+        "operationId": "AddMedicalRecord",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/medical_record.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/POST/medical_record.post.schema.json"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Medical Record"
+        ],
+        "summary": "Update a medical record from a first name and last name",
+        "operationId": "UpdateMedicalRecord",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "First name of the person whose medical record is added",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "description": "Last name of the person whose medical record is added",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/medical_record.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Medical Record"
+        ],
+        "summary": "Delete a medical record from a first name and last name",
+        "operationId": "DeleteMedicalRecord",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "First name of the person whose medical record is added",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "description": "Last name of the person whose medical record is added",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/persons": {
+      "post": {
+        "tags": [
+          "Add Persons"
+        ],
+        "summary": "Add Persons data to the database",
+        "operationId": "AddPersonsToDatabase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/persons.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/person": {
+      "post": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "Add a person to the database",
+        "operationId": "AddPerson",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/person.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "Update a person to the database",
+        "operationId": "UpdatePerson",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/person.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Person"
+        ],
+        "summary": "Delete a person from the database",
+        "operationId": "DeletePerson",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "First name of the person whose medical record is added",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "description": "Last name of the person whose medical record is added",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    }
+  }
+}

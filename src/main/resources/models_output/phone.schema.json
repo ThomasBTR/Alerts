@@ -1,0 +1,14 @@
+{
+  "$id": "phone.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required":[
+    "phone"
+  ],
+  "properties": {
+    "phone": {
+      "type": "string",
+      "pattern": "^((.)?\\d{3})?(-|\\s)?\\d{3}(-|\\s)?\\d{4}$"
+    }
+  }
+}

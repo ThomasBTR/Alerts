@@ -1,0 +1,34 @@
+{
+  "$id": "medical_record.post.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "medical record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format":"uuid"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "birthdate": {
+      "type": "string"
+    },
+    "medications": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z]+:[0-9]mg$"
+      }
+    },
+    "allergies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

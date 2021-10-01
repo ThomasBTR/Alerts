@@ -1,0 +1,27 @@
+{
+  "$id": "firestation.get.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "required":[
+    "persons",
+    "adultCount",
+    "infantCount"
+  ],
+  "type": "object",
+  "properties": {
+    "persons": {
+      "type": "array",
+      "description": "array of persons linked to firestation",
+      "items": {
+        "$ref": "../../models_input/person.schema.json"
+      }
+    },
+    "adultCount": {
+      "description": "Adult Count on the concerned firestation",
+      "type": "integer"
+    },
+    "childCount": {
+      "description": "child Count on the concerned firestation",
+      "type": "integer"
+    }
+  }
+}

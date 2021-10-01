@@ -1,0 +1,17 @@
+{
+  "$id": "child_alert.get.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "required":[
+    "child"
+  ],
+  "type": "object",
+  "properties": {
+    "child": {
+      "type": "array",
+      "description": "array of child linked to firestation",
+      "items": {
+        "$ref": "../../models_output/child.schema.json"
+        }
+    }
+  }
+}

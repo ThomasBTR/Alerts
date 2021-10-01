@@ -1,0 +1,15 @@
+package com.safetynet.alerts.database.repositories;
+
+import com.safetynet.alerts.database.entities.PersonEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
+
+	@Query("SELECT p from PersonEntity p WHERE p.addressEntity.station =:variable")
+	List<PersonEntity> findPersonEntitiesByAddressEntityStation(@Param("variable") int stationNumber);
+
+}

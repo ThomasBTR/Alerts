@@ -1,0 +1,22 @@
+{
+  "$id": "person_info.get.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "required":[
+    "phones"
+  ],
+  "type": "object",
+  "properties": {
+    "phones": {
+      "type": "array",
+      "description": "array of phone linked to firestation",
+      "items": {
+        "persons_infos": {
+          "$ref": "../../models_output/person_info.schema.json"
+        },
+        "medical_records": {
+          "$ref": "../../models_input/medical_record.schema.json"
+        }
+      }
+    }
+  }
+}
