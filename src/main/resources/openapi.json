@@ -35,6 +35,52 @@
         }
       }
     },
+    "/persons": {
+      "post": {
+        "tags": [
+          "Add Persons"
+        ],
+        "summary": "Add Persons data to the database",
+        "operationId": "AddPersonsToDatabase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/persons.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/medicalrecords": {
+      "post": {
+        "tags": [
+          "Add Medical Records"
+        ],
+        "summary": "Add Medical Records data to the database",
+        "operationId": "AddMedicalRecordsToDatabase",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/medicalrecords.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
     "/firestation": {
       "get": {
         "tags": [
@@ -348,29 +394,6 @@
         }
       }
     },
-    "/medicalrecords": {
-      "post": {
-        "tags": [
-          "Add Medical Records"
-        ],
-        "summary": "Add Medical Records data to the database",
-        "operationId": "AddMedicalRecordsToDatabase",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "models_input/medicalrecords.schema.json"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Accepted"
-          }
-        }
-      }
-    },
     "/medicalRecord": {
       "post": {
         "tags": [
@@ -471,29 +494,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Accepted"
-          }
-        }
-      }
-    },
-    "/persons": {
-      "post": {
-        "tags": [
-          "Add Persons"
-        ],
-        "summary": "Add Persons data to the database",
-        "operationId": "AddPersonsToDatabase",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "models_input/persons.schema.json"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Accepted"

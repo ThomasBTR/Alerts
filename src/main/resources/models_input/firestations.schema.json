@@ -1,14 +1,17 @@
 {
-  "$id": "firestation.schema.json",
+  "$id": "firestations.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "firestation",
-  "type": "array",
-  "items": {
-    "content": {
-      "application/json": {
-        "schema": {
+  "required": [
+    "firestations"
+  ],
+  "type": "object",
+  "properties": {
+    "firestations": {
+      "type": "array",
+      "description": "array of firestation object",
+      "items": {
           "$ref": "firestation.schema.json"
-        }
       }
     }
   }

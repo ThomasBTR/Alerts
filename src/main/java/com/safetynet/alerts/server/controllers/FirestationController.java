@@ -1,31 +1,53 @@
 package com.safetynet.alerts.server.controllers;
 
-import com.safetynet.alerts.database.entities.PersonEntity;
-import com.safetynet.alerts.database.repositories.PersonRepository;
-import com.safetynet.alerts.server.mapping.FirestationMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safetynet.alerts.server.services.FirestationGetServices;
+import io.swagger.api.AddFirestationsApi;
 import io.swagger.api.StationNumberApi;
 import io.swagger.model.Firestation;
-import io.swagger.model.Person;
+import io.swagger.model.Firestations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/firestation")
-public class FirestationController implements StationNumberApi {
+public class FirestationController implements StationNumberApi, AddFirestationsApi {
 
 	@Autowired
 	protected HttpServletRequest request;
 
 	@Autowired
-	private PersonRepository personRepository;
+	FirestationGetServices firestationGetServices;
 
-	private static final FirestationMapper FIRESTATION_MAPPER = FirestationMapper.INSTANCE;
+	@Override
+	public Optional<ObjectMapper> getObjectMapper() {
+		return StationNumberApi.super.getObjectMapper();
+	}
+
+	@Override
+	public Optional<HttpServletRequest> getRequest() {
+		return StationNumberApi.super.getRequest();
+	}
+
+	@Override
+	public Optional<String> getAcceptHeader() {
+		return StationNumberApi.super.getAcceptHeader();
+	}
+
+	@Override
+	public ResponseEntity<Void> addFirestationMappingToSpecifiedAddress(String address) {
+		return StationNumberApi.super.addFirestationMappingToSpecifiedAddress(address);
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteFirestationMappingToSpecifiedAddress(String address) {
+		return StationNumberApi.super.deleteFirestationMappingToSpecifiedAddress(address);
+	}
 
 	@Override
 	public ResponseEntity<Firestation> getPersonsInfosFromFirestationID(String stationNumber) {
@@ -34,37 +56,23 @@ public class FirestationController implements StationNumberApi {
 			return ResponseEntity.noContent().build();
 		} else {
 			try {
-				return processFirestationID(stationNumber);
+				return firestationGetServices.processFirestationID(stationNumber);
 			} catch (Exception e) {
-				log.warn(e.getMessage());
+//				log.warn(e.getMessage());
 				return ResponseEntity.internalServerError().build();
 			}
 
 		}
 	}
 
-	private ResponseEntity<Firestation> processFirestationID(String stationNumber) {
+	@Override
+	public ResponseEntity<Void> updateFirestationMappingToSpecifiedAddress(String address) {
+		return StationNumberApi.super.updateFirestationMappingToSpecifiedAddress(address);
+	}
 
-		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityStation(Integer.parseInt(stationNumber));
-		int adultCount = 0;
-		int childCount = 0;
 
-		for (PersonEntity personEntity : personEntities) {
-			if (personEntity.getBirthdate().isAfter(LocalDate.now().minusYears(18))) {
-				++childCount;
-			} else {
-				++adultCount;
-			}
-		}
-
-		List<Person> persons = FIRESTATION_MAPPER.personEntityListToFirestationPerson(personEntities);
-
-		Firestation firestationResponseBody = new Firestation();
-
-		firestationResponseBody.setAdultCount(adultCount);
-		firestationResponseBody.setChildCount(childCount);
-		firestationResponseBody.setPersons(persons);
-
-		return ResponseEntity.ok(firestationResponseBody);
+	@Override
+	public ResponseEntity<Void> addFirestationToDatabase(Firestations body) {
+		return AddFirestationsApi.super.addFirestationToDatabase(body);
 	}
 }

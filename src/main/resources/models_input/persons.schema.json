@@ -2,13 +2,16 @@
   "$id": "persons.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "persons",
-  "type": "array",
-  "items": {
-    "content": {
-      "application/json": {
-        "schema": {
+  "required": [
+    "persons"
+  ],
+  "type": "object",
+  "properties": {
+    "persons": {
+      "type": "array",
+      "description": "array of person object",
+      "items": {
           "$ref": "person.schema.json"
-        }
       }
     }
   }
