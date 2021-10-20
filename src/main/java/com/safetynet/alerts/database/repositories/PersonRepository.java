@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
+public interface PersonRepository extends JpaRepository<PersonEntity, Integer> {
 
 	@Query("SELECT p from PersonEntity p WHERE p.addressEntity.station =:variable")
 	List<PersonEntity> findPersonEntitiesByAddressEntityStation(@Param("variable") int stationNumber);
+
 
 }

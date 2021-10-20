@@ -1,0 +1,28 @@
+{
+  "$id": "medications.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "medication object",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "personEntity": {
+      "type": "string"
+    },
+    "medicineEntity": {
+      "type": "array",
+      "items": {
+        "id": {
+          "type": "integer"
+        },
+        "medicineName": {
+          "type": "string"
+        }
+      }
+    },
+    "dosage": {
+      "type": "integer"
+    }
+  }
+}

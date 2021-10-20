@@ -1,5 +1,5 @@
 {
-  "$id": "persons.schema.json",
+  "$id": "personsReq.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "persons",
   "required": [
@@ -11,7 +11,7 @@
       "type": "array",
       "description": "array of person object",
       "items": {
-          "$ref": "person.schema.json"
+          "$ref": "personReq.schema.json"
       }
     }
   }
