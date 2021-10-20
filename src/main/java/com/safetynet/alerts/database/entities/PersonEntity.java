@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name="persons")
+@Table(name = "persons")
 public class PersonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,9 @@ public class PersonEntity {
 	@Embedded
 	private AddressEntity addressEntity;
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name="allergies", joinColumns = @JoinColumn(name="person_id"))
+	@JoinTable(name = "allergies", joinColumns = @JoinColumn(name = "person_id"))
 	private List<AllergeneEntity> allergies;
-	@OneToMany(mappedBy= "personEntity")
+	@OneToMany(mappedBy = "personEntity")
 	private List<MedicationEntity> medications;
 
 	public PersonEntity() {

@@ -46,14 +46,21 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "models_input/persons.schema.json"
+                "$ref": "models_input/personsReq.schema.json"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Accepted"
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "models_output/personsRsp.schema.json"
+                }
+              }
+            }
           }
         }
       }
@@ -512,7 +519,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "models_input/person.schema.json"
+                "$ref": "models_input/personReq.schema.json"
               }
             }
           }
@@ -533,7 +540,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "models_input/person.schema.json"
+                "$ref": "models_input/personReq.schema.json"
               }
             }
           }

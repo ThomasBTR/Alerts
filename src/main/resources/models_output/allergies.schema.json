@@ -1,0 +1,17 @@
+{
+  "$id": "allergies.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "id",
+    "allergene"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "allergene": {
+      "type": "string"
+    }
+  }
+}

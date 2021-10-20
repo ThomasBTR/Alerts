@@ -1,0 +1,56 @@
+{
+  "$id": "personRsp.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required":[
+    "id",
+    "firstName",
+    "lastName",
+    "phone",
+    "address"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        }
+      }
+    },
+    "allergies": {
+      "type": "array",
+      "items": {
+        "$ref": "allergies.schema.json"
+      }
+    },
+    "medications": {
+      "type": "array",
+      "items": {
+        "$ref": "medications.schema.json"
+      }
+    }
+  }
+}

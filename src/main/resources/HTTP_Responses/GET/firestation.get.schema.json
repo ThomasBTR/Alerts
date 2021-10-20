@@ -12,7 +12,7 @@
       "type": "array",
       "description": "array of persons linked to firestation",
       "items": {
-        "$ref": "../../models_input/person.schema.json"
+        "$ref": "../../models_input/personReq.schema.json"
       }
     },
     "adultCount": {

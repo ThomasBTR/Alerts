@@ -4,7 +4,7 @@ import com.safetynet.alerts.database.entities.PersonEntity;
 import com.safetynet.alerts.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.mapping.FirestationMapper;
 import io.swagger.model.Firestation;
-import io.swagger.model.Person;
+import io.swagger.model.PersonReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class FirestationGetServices {
 			}
 		}
 
-		List<Person> persons = firestationMapper.personEntityListToFirestationPerson(personEntities);
+		List<PersonReq> persons = firestationMapper.personEntityListToFirestationPerson(personEntities);
 
 		Firestation firestationResponseBody = new Firestation();
 

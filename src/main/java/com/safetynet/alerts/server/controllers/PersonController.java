@@ -2,7 +2,8 @@ package com.safetynet.alerts.server.controllers;
 
 import com.safetynet.alerts.server.services.PersonsPostService;
 import io.swagger.api.AddPersonsApi;
-import io.swagger.model.Persons;
+import io.swagger.model.PersonsReq;
+import io.swagger.model.PersonsRsp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +18,20 @@ public class PersonController implements AddPersonsApi {
 	@Autowired
 	protected HttpServletRequest request;
 
+
 	@Autowired
 	PersonsPostService personsPostService;
 
 	@Override
-	public ResponseEntity<Void> addPersonsToDatabase(Persons body) {
-		return AddPersonsApi.super.addPersonsToDatabase(body);
+	public ResponseEntity<PersonsRsp> addPersonsToDatabase(PersonsReq body) {
+		ResponseEntity<PersonsRsp> response = null;
+
+		try {
+			response = ResponseEntity.ok(personsPostService.addPersons(body));
+		} catch (Exception e) {
+			log.warn(e.getMessage(), e);
+		}
+
+		return response;
 	}
 }
