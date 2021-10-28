@@ -4,6 +4,7 @@ import com.safetynet.alerts.server.services.PersonsPostService;
 import io.swagger.api.AddPersonsApi;
 import io.swagger.model.PersonsReq;
 import io.swagger.model.PersonsRsp;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Log4j2
 @RestController
 @RequestMapping("/person")
 public class PersonController implements AddPersonsApi {
