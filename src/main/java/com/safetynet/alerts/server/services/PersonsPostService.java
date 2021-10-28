@@ -6,7 +6,8 @@ import com.safetynet.alerts.server.mapping.IPersonMapper;
 import io.swagger.model.PersonReq;
 import io.swagger.model.PersonsReq;
 import io.swagger.model.PersonsRsp;
-import lombok.extern.java.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class PersonsPostService {
 	@Autowired
 	IPersonMapper personMapper;
 
+	private static final Logger logger = LogManager.getLogger(PersonsPostService.class);
+
 	public PersonsRsp addPersons(PersonsReq personsReq) {
 		try{
 			PersonsRsp personsRsp = new PersonsRsp();
@@ -28,12 +31,13 @@ public class PersonsPostService {
 				PersonEntity personEntity = personMapper.personReqToPersonEntity(person);
 				personRepository.save(personEntity);
 				personsRsp.addPersonsItem(personMapper.personEntityToPersonRsp(personEntity));
+				return personsRsp;
 			}
 		}catch(Exception e){
+			logger.error(e.getMessage(),e.getStackTrace(),e);
+			return null;
 		}
-
-
-		return personsRsp;
+		return null;
 	}
 
 }
