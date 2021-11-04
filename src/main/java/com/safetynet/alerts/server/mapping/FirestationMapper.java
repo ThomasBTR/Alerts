@@ -1,6 +1,6 @@
 package com.safetynet.alerts.server.mapping;
 
-import com.safetynet.alerts.database.entities.PersonEntity;
+import com.safetynet.alerts.server.database.entities.PersonEntity;
 import io.swagger.model.PersonReq;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

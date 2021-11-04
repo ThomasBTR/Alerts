@@ -1,6 +1,7 @@
 package com.safetynet.alerts.Controller;
 
 
+import com.google.inject.Inject;
 import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.controllers.PersonController;
 import com.safetynet.alerts.server.services.PersonsPostService;
@@ -15,8 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import javax.inject.Inject;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

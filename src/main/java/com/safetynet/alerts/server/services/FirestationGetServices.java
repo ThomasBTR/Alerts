@@ -1,7 +1,7 @@
 package com.safetynet.alerts.server.services;
 
-import com.safetynet.alerts.database.entities.PersonEntity;
-import com.safetynet.alerts.database.repositories.PersonRepository;
+import com.safetynet.alerts.server.database.entities.PersonEntity;
+import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.mapping.FirestationMapper;
 import io.swagger.model.Firestation;
 import io.swagger.model.PersonReq;

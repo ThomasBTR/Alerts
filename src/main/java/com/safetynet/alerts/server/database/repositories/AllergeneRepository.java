@@ -1,6 +1,6 @@
-package com.safetynet.alerts.database.repositories;
+package com.safetynet.alerts.server.database.repositories;
 
-import com.safetynet.alerts.database.entities.AllergeneEntity;
+import com.safetynet.alerts.server.database.entities.AllergeneEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

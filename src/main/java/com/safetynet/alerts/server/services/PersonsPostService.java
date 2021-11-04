@@ -1,13 +1,13 @@
 package com.safetynet.alerts.server.services;
 
-import com.safetynet.alerts.database.entities.PersonEntity;
-import com.safetynet.alerts.database.repositories.PersonRepository;
+import com.safetynet.alerts.server.database.entities.PersonEntity;
+import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.mapping.IPersonMapper;
 import io.swagger.model.PersonReq;
 import io.swagger.model.PersonsReq;
 import io.swagger.model.PersonsRsp;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,7 @@ public class PersonsPostService {
 	@Autowired
 	PersonRepository personRepository;
 
-	@Autowired
-	IPersonMapper personMapper;
-
-	private static final Logger logger = LogManager.getLogger(PersonsPostService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PersonsPostService.class);
 
 	public PersonsRsp addPersons(PersonsReq personsReq) {
 		try{
@@ -28,16 +25,15 @@ public class PersonsPostService {
 
 			for (PersonReq person :
 					personsReq.getPersons()) {
-				PersonEntity personEntity = personMapper.personReqToPersonEntity(person);
+				PersonEntity personEntity = IPersonMapper.INSTANCE.personReqToPersonEntity(person);
 				personRepository.save(personEntity);
-				personsRsp.addPersonsItem(personMapper.personEntityToPersonRsp(personEntity));
-				return personsRsp;
+				personsRsp.addPersonsItem(IPersonMapper.INSTANCE.personEntityToPersonRsp(personEntity));
 			}
+			return personsRsp;
 		}catch(Exception e){
 			logger.error(e.getMessage(),e.getStackTrace(),e);
 			return null;
 		}
-		return null;
 	}
 
 }

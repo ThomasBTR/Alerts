@@ -12,14 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Log4j2
 @RestController
-@RequestMapping("/person")
 public class PersonController implements AddPersonsApi {
 
 	@Autowired
 	protected HttpServletRequest request;
-
 
 	@Autowired
 	PersonsPostService personsPostService;

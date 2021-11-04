@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/firestation")
 public class FirestationController implements StationNumberApi, AddFirestationsApi {
 
 	@Autowired

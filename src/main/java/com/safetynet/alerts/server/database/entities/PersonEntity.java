@@ -1,4 +1,4 @@
-package com.safetynet.alerts.database.entities;
+package com.safetynet.alerts.server.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
