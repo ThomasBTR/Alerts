@@ -7,9 +7,6 @@
     "id": {
       "type": "integer"
     },
-    "personEntity": {
-      "type": "string"
-    },
     "medicineEntity": {
       "type": "array",
       "items": {

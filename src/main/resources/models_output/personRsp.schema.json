@@ -3,16 +3,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "required":[
-    "id",
     "firstName",
     "lastName",
     "phone",
     "address"
   ],
   "properties": {
-    "id": {
-      "type": "integer"
-    },
     "firstName": {
       "type": "string"
     },

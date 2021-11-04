@@ -12,18 +12,19 @@ import java.util.List;
 @Setter
 @Table(name = "persons")
 public class PersonEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String firstName;
-	private String lastName;
+
+	@EmbeddedId
+	private NameEntity nameEntity;
 	private LocalDate birthdate;
 	private String email;
 	private String phone;
 	@Embedded
 	private AddressEntity addressEntity;
 	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(name = "allergies", joinColumns = @JoinColumn(name = "person_id"))
+	@JoinTable(name = "allergies", joinColumns = {
+			@JoinColumn(name = "firstName", referencedColumnName = "firstName", insertable = false, updatable = false),
+			@JoinColumn(name = "lastName", referencedColumnName = "lastName", insertable = false, updatable = false)
+	})
 	private List<AllergeneEntity> allergies;
 	@OneToMany(mappedBy = "personEntity")
 	private List<MedicationEntity> medications;
@@ -32,13 +33,13 @@ public class PersonEntity {
 
 	}
 
-	public PersonEntity(String firstName, String lastName, LocalDate birthdate, String email, String phone, AddressEntity addressEntity, List<AllergeneEntity> allergies) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public PersonEntity(NameEntity nameEntity, LocalDate birthdate, String email, String phone, AddressEntity addressEntity, List<AllergeneEntity> allergies, List<MedicationEntity> medications) {
+		this.nameEntity = nameEntity;
 		this.birthdate = birthdate;
 		this.email = email;
 		this.phone = phone;
 		this.addressEntity = addressEntity;
 		this.allergies = allergies;
+		this.medications = medications;
 	}
 }
