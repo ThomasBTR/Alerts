@@ -1,21 +1,18 @@
 package com.safetynet.alerts.server.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynet.alerts.server.services.FirestationGetServices;
+import com.safetynet.alerts.server.services.FirestationPostServices;
 import io.swagger.api.AddFirestationsApi;
-import io.swagger.api.StationNumberApi;
-import io.swagger.model.Firestation;
+import io.swagger.model.AddressesRsp;
 import io.swagger.model.Firestations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @RestController
-public class FirestationController implements StationNumberApi, AddFirestationsApi {
+public class FirestationController implements AddFirestationsApi {
 
 	@Autowired
 	protected HttpServletRequest request;
@@ -23,55 +20,38 @@ public class FirestationController implements StationNumberApi, AddFirestationsA
 	@Autowired
 	FirestationGetServices firestationGetServices;
 
-	@Override
-	public Optional<ObjectMapper> getObjectMapper() {
-		return StationNumberApi.super.getObjectMapper();
-	}
+	@Autowired
+	FirestationPostServices firestationPostServices;
 
 	@Override
-	public Optional<HttpServletRequest> getRequest() {
-		return StationNumberApi.super.getRequest();
-	}
+	public ResponseEntity<AddressesRsp> addFirestationToDatabase(Firestations body) {
+		ResponseEntity<AddressesRsp> response = null;
 
-	@Override
-	public Optional<String> getAcceptHeader() {
-		return StationNumberApi.super.getAcceptHeader();
-	}
-
-	@Override
-	public ResponseEntity<Void> addFirestationMappingToSpecifiedAddress(String address) {
-		return StationNumberApi.super.addFirestationMappingToSpecifiedAddress(address);
-	}
-
-	@Override
-	public ResponseEntity<Void> deleteFirestationMappingToSpecifiedAddress(String address) {
-		return StationNumberApi.super.deleteFirestationMappingToSpecifiedAddress(address);
-	}
-
-	@Override
-	public ResponseEntity<Firestation> getPersonsInfosFromFirestationID(String stationNumber) {
-
-		if (null == stationNumber) {
-			return ResponseEntity.noContent().build();
-		} else {
-			try {
-				return firestationGetServices.processFirestationID(stationNumber);
-			} catch (Exception e) {
-//				log.warn(e.getMessage());
-				return ResponseEntity.internalServerError().build();
-			}
-
+		try {
+			response = ResponseEntity.ok(firestationPostServices.addFirestations(body));
+		} catch (Exception e) {
+			log.warn(e.getMessage(), e);
 		}
-	}
 
-	@Override
-	public ResponseEntity<Void> updateFirestationMappingToSpecifiedAddress(String address) {
-		return StationNumberApi.super.updateFirestationMappingToSpecifiedAddress(address);
+		return response;
+
 	}
 
 
-	@Override
-	public ResponseEntity<Void> addFirestationToDatabase(Firestations body) {
-		return AddFirestationsApi.super.addFirestationToDatabase(body);
-	}
+	//
+//	@Override
+//	public ResponseEntity<Firestation> getPersonsInfosFromFirestationID(String stationNumber) {
+//
+//		if (null == stationNumber) {
+//			return ResponseEntity.noContent().build();
+//		} else {
+//			try {
+//				return firestationGetServices.processFirestationID(stationNumber);
+//			} catch (Exception e) {
+////				log.warn(e.getMessage());
+//				return ResponseEntity.internalServerError().build();
+//			}
+//
+//		}
+//	}
 }

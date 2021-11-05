@@ -30,7 +30,14 @@
         },
         "responses": {
           "200": {
-            "description": "Accepted"
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "models_output/addressesRsp.schema.json"
+                }
+              }
+            }
           }
         }
       }

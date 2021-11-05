@@ -1,0 +1,18 @@
+{
+  "$id": "personsRsp.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "persons",
+  "required": [
+    "addresses"
+  ],
+  "type": "object",
+  "properties": {
+    "addresses": {
+      "type": "array",
+      "description": "array of address object",
+      "items": {
+          "$ref": "addressRsp.schema.json"
+      }
+    }
+  }
+}

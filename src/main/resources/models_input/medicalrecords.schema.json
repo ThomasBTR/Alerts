@@ -2,9 +2,12 @@
   "$id": "medicalrecords.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Medical Records object added to database",
-  "type": "array",
-  "items": {
-    "content": {
+  "required": [
+    "medicalrecords"
+  ],
+  "type": "object",
+  "properties": {
+    "medicalrecords": {
       "application/json": {
         "schema": {
           "$ref": "medical_record.schema.json"

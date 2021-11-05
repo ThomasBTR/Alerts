@@ -2,7 +2,7 @@ package com.safetynet.alerts.server.services;
 
 import com.safetynet.alerts.server.database.entities.PersonEntity;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
-import com.safetynet.alerts.server.mapping.FirestationMapper;
+import com.safetynet.alerts.server.mapping.IFirestationMapper;
 import io.swagger.model.Firestation;
 import io.swagger.model.PersonReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,6 @@ public class FirestationGetServices {
 	@Autowired
 	PersonRepository personRepository;
 
-	FirestationMapper firestationMapper = FirestationMapper.INSTANCE;
-
 	public ResponseEntity<Firestation> processFirestationID(String stationNumber) {
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityStation(Integer.parseInt(stationNumber));
@@ -34,7 +32,7 @@ public class FirestationGetServices {
 			}
 		}
 
-		List<PersonReq> persons = firestationMapper.personEntityListToFirestationPerson(personEntities);
+		List<PersonReq> persons = IFirestationMapper.INSTANCE.personEntityListToFirestationPerson(personEntities);
 
 		Firestation firestationResponseBody = new Firestation();
 
