@@ -3,6 +3,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "medical record",
   "type": "object",
+  "required": [
+    "firstName",
+    "lastName"
+  ],
   "properties": {
     "firstName": {
       "type": "string"

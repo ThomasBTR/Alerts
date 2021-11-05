@@ -8,10 +8,10 @@
   "type": "object",
   "properties": {
     "medicalrecords": {
-      "application/json": {
-        "schema": {
-          "$ref": "medical_record.schema.json"
-        }
+      "type": "array",
+      "description": "array of medicalrecords object",
+      "items": {
+        "$ref": "medical_record.schema.json"
       }
     }
   }

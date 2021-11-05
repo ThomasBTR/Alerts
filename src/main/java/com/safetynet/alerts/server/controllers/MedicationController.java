@@ -1,8 +1,8 @@
 package com.safetynet.alerts.server.controllers;
 
-import com.safetynet.alerts.server.services.PersonsPostService;
+import com.safetynet.alerts.server.services.MedicationPostServices;
 import io.swagger.api.AddMedicalRecordsApi;
-import io.swagger.model.PersonsReq;
+import io.swagger.model.Medicalrecords;
 import io.swagger.model.PersonsRsp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +17,14 @@ public class MedicationController implements AddMedicalRecordsApi {
 	protected HttpServletRequest request;
 
 	@Autowired
-	PersonsPostService personsPostService;
+	MedicationPostServices medicationsPostServices;
 
 	@Override
-	public ResponseEntity<PersonsRsp> addPersonsToDatabase(PersonsReq body) {
+	public ResponseEntity<PersonsRsp> addMedicalRecordsToDatabase(Medicalrecords body) {
 		ResponseEntity<PersonsRsp> response = null;
 
 		try {
-			response = ResponseEntity.ok(personsPostService.addPersons(body));
+			response = ResponseEntity.ok(medicationsPostServices.addMedications(body));
 		} catch (Exception e) {
 			log.warn(e.getMessage(), e);
 		}
