@@ -26,7 +26,7 @@ public class PersonEntity {
 			@JoinColumn(name = "lastName", referencedColumnName = "lastName", insertable = false, updatable = false)
 	})
 	private List<AllergeneEntity> allergies;
-	@OneToMany(mappedBy = "personEntity")
+	@OneToMany(mappedBy = "personEntity", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<MedicationEntity> medications;
 
 	public PersonEntity() {

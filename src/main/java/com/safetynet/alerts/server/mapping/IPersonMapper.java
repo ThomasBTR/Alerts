@@ -23,9 +23,16 @@ public interface IPersonMapper {
 	@Mapping(target = "lastName", source = "nameEntity.lastName")
 	@Mapping(target = "firstName", source = "nameEntity.firstName")
 	@Mapping(target = "address", source = "addressEntity")
+	@Mapping(target = "medications", ignore = true)
+	@Mapping(target = "allergies", ignore = true)
+	PersonRsp personEntityToPersonRsp(PersonEntity personEntity);
+
+	@Mapping(target = "lastName", source = "nameEntity.lastName")
+	@Mapping(target = "firstName", source = "nameEntity.firstName")
+	@Mapping(target = "address", source = "addressEntity")
 	@Mapping(target = "medications", source = "medications", qualifiedByName = "medicationEntityToMedications")
 	@Mapping(target = "allergies", source = "allergies", qualifiedByName = "allergiesRefractor")
-	PersonRsp personEntityToPersonRsp(PersonEntity personEntity);
+	PersonRsp personEntityWithMedicationToPersonRsp(PersonEntity personEntity);
 
 	@Mapping(target = "addressEntity", ignore = true)
 	@Mapping(target = "nameEntity", ignore = true)
@@ -50,9 +57,11 @@ public interface IPersonMapper {
 		     medicationEntities) {
 			io.swagger.model.Medications medications = new Medications();
 			medications.setDosage(medicationEntity.getDosage());
+			medications.setId(medicationEntity.getId());
 			MedicineEntity medicineEntity = medicationEntity.getMedicineEntity();
 			MedicationsMedicineEntity medicationsMedicineEntity = new MedicationsMedicineEntity();
 			medicationsMedicineEntity.setMedicineName(medicineEntity.getMedecineName());
+			medicationsMedicineEntity.setId(medicineEntity.getId());
 			medications.setMedicineEntity(medicationsMedicineEntity);
 			medicationsList.add(medications);
 		}
@@ -66,6 +75,7 @@ public interface IPersonMapper {
 		     allergeneEntities) {
 			Allergies allergie = new Allergies();
 			allergie.setAllergene(allergene.getAllergene());
+			allergie.setId(allergene.getId());
 			allergiesList.add(allergie);
 		}
 		return allergiesList;

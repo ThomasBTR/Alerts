@@ -4,6 +4,8 @@ import com.safetynet.alerts.server.database.entities.AllergeneEntity;
 import com.safetynet.alerts.server.database.entities.MedicationEntity;
 import com.safetynet.alerts.server.database.entities.MedicineEntity;
 import com.safetynet.alerts.server.database.entities.PersonEntity;
+import com.safetynet.alerts.server.database.repositories.AllergeneRepository;
+import com.safetynet.alerts.server.database.repositories.MedicationRepository;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.mapping.IPersonMapper;
 import io.swagger.model.MedicalRecord;
@@ -26,6 +28,12 @@ public class MedicationPostServices {
 	@Autowired
 	PersonRepository personRepository;
 
+	@Autowired
+	MedicationRepository medicationRepository;
+
+	@Autowired
+	AllergeneRepository allergeneRepository;
+
 	private static final Logger logger = LoggerFactory.getLogger(MedicationPostServices.class);
 
 	public PersonsRsp addMedications(Medicalrecords body) {
@@ -36,13 +44,18 @@ public class MedicationPostServices {
 				PersonEntity person = personRepository.findPersonEntityByNameEntityLike(medicalrecord.getFirstName(), medicalrecord.getLastName());
 				person.setBirthdate(getBirthDate(medicalrecord.getBirthdate()));
 
-				person.setMedications(getMedicationsEntities(medicalrecord,person));
+				List<MedicationEntity> medicationEntities = getMedicationsEntities(medicalrecord,person);
+				medicationEntities = medicationRepository.saveAll(medicationEntities);
+				person.setMedications(medicationEntities);
 
-				person.setAllergies(getAllergies(medicalrecord));
+				List<AllergeneEntity> allergeneEntities = getAllergies(medicalrecord);
+				allergeneEntities = allergeneRepository.saveAll(allergeneEntities);
+				person.setAllergies(allergeneEntities);
 
-				personRepository.save(person);
 
-				PersonRsp personRsp = IPersonMapper.INSTANCE.personEntityToPersonRsp(person);
+				person = personRepository.save(person);
+
+				PersonRsp personRsp = IPersonMapper.INSTANCE.personEntityWithMedicationToPersonRsp(person);
 
 				personRspList.addPersonsItem(personRsp);
 			}
@@ -54,7 +67,7 @@ public class MedicationPostServices {
 	}
 
 	private LocalDate getBirthDate(String birthdate) {
-		return LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		return LocalDate.parse(birthdate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 
 	}
 
