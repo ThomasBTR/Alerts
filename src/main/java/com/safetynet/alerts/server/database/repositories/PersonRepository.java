@@ -19,5 +19,4 @@ public interface PersonRepository extends JpaRepository<PersonEntity, Integer> {
 
 	@Query("SELECT p FROM PersonEntity p WHERE p.addressEntity.address =:variable")
 	List<PersonEntity> findPersonEntityByAddressEntityEquals(@Param("variable")String address);
-
 }
