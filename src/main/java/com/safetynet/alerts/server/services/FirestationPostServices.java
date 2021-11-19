@@ -19,7 +19,11 @@ import java.util.List;
 public class FirestationPostServices {
 
 	@Autowired
-	PersonRepository personRepository;
+	public PersonRepository personRepository;
+
+	public FirestationPostServices(PersonRepository personRepository){
+		this.personRepository = personRepository;
+	}
 
 	private static final Logger logger = LoggerFactory.getLogger(FirestationPostServices.class);
 
@@ -33,7 +37,7 @@ public class FirestationPostServices {
 				List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(firestation.getAddress());
 
 				for (PersonEntity person : personEntities) {
-					AddressRsp addressRsp = null;
+					AddressRsp addressRsp;
 					AddressEntity addressEntity = person.getAddressEntity();
 					addressEntity.setStation(firestation.getStation());
 					person.setAddressEntity(addressEntity);

@@ -26,13 +26,20 @@ import java.util.List;
 public class MedicationPostServices {
 
 	@Autowired
-	PersonRepository personRepository;
+	public PersonRepository personRepository;
 
 	@Autowired
-	MedicationRepository medicationRepository;
+	public MedicationRepository medicationRepository;
 
 	@Autowired
-	AllergeneRepository allergeneRepository;
+	public AllergeneRepository allergeneRepository;
+
+	public MedicationPostServices(PersonRepository personRepository, MedicationRepository medicationRepository, AllergeneRepository allergeneRepository){
+		this.medicationRepository = medicationRepository;
+		this.allergeneRepository = allergeneRepository;
+		this.personRepository = personRepository;
+	}
+
 
 	private static final Logger logger = LoggerFactory.getLogger(MedicationPostServices.class);
 
