@@ -1,5 +1,6 @@
 package com.safetynet.alerts.server.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynet.alerts.server.services.PersonGetService;
 import com.safetynet.alerts.server.services.PersonsPostService;
 import io.swagger.api.AddPersonsApi;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 @RestController
 public class PersonController implements AddPersonsApi, ChildAlertApi {
@@ -27,6 +29,21 @@ public class PersonController implements AddPersonsApi, ChildAlertApi {
 	PersonGetService personGetService;
 
 	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
+
+	@Override
+	public Optional<ObjectMapper> getObjectMapper() {
+		return AddPersonsApi.super.getObjectMapper();
+	}
+
+	@Override
+	public Optional<HttpServletRequest> getRequest() {
+		return AddPersonsApi.super.getRequest();
+	}
+
+	@Override
+	public Optional<String> getAcceptHeader() {
+		return AddPersonsApi.super.getAcceptHeader();
+	}
 
 	@Override
 	public ResponseEntity<PersonsRsp> addPersonsToDatabase(PersonsReq body) {

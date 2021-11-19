@@ -19,9 +19,13 @@ import java.util.List;
 public class PersonGetService {
 
 	@Autowired
-	PersonRepository personRepository;
+	public PersonRepository personRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(PersonGetService.class);
+
+	public PersonGetService(PersonRepository personRepository){
+		this.personRepository = personRepository;
+	}
 
 	public ChildAlert getChildrenInfoFromAddress(String address) {
 		try{
@@ -32,7 +36,7 @@ public class PersonGetService {
 
 			for (PersonEntity person :
 				personEntityList) {
-				if(person.getBirthdate().isBefore(LocalDate.now().minusYears(18))){
+				if(person.getBirthdate().isAfter(LocalDate.now().minusYears(18))){
 					Child child = new Child();
 					child.setFirstName(person.getNameEntity().getFirstName());
 					child.setLastName(person.getNameEntity().getLastName());
@@ -41,7 +45,7 @@ public class PersonGetService {
 				} else {
 					 PersonInfo1 personInfo1 = new PersonInfo1();
 					 personInfo1.setFirstName(person.getNameEntity().getFirstName());
-					 personInfo1.setLastName(person.getNameEntity().getFirstName());
+					 personInfo1.setLastName(person.getNameEntity().getLastName());
 					 personInfo1.setPhone(person.getPhone());
 					 personInfo1List.add(personInfo1);
 				}
