@@ -5,6 +5,7 @@ import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import io.swagger.model.Child;
 import io.swagger.model.ChildAlert;
 import io.swagger.model.PersonInfo1;
+import io.swagger.model.PhoneAlert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class PersonGetService {
 	public PersonRepository personRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(PersonGetService.class);
+
+	public PersonGetService(){}
 
 	public PersonGetService(PersonRepository personRepository){
 		this.personRepository = personRepository;
@@ -73,4 +76,17 @@ public class PersonGetService {
 		}
 	}
 
+	public PhoneAlert getPhoneAlert(int station) {
+
+		PhoneAlert phoneAlert = new PhoneAlert();
+
+		List<PersonEntity> personEntityList = personRepository.findPersonEntitiesByAddressEntityContainingSpecificStation(station);
+
+		for (PersonEntity person:
+		     personEntityList) {
+			phoneAlert.addPhonesItem(person.getPhone());
+		}
+
+		return phoneAlert;
+	}
 }

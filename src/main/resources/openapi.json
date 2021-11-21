@@ -255,7 +255,7 @@
             "required": true,
             "allowEmptyValue": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],

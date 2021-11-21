@@ -5,6 +5,7 @@ import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.PersonGetService;
 import io.swagger.model.ChildAlert;
+import io.swagger.model.PhoneAlert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -119,7 +120,7 @@ class PersonGetServiceTests {
 		verify(personGetService.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
 		assertThat(childAlert).isInstanceOf(ChildAlert.class);
 		try {
-			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/ChildAlertWithChild.json"), ChildAlert.class));
+			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/childAlertWithChild.json"), ChildAlert.class));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -137,7 +138,26 @@ class PersonGetServiceTests {
 		verify(personGetService.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
 		assertThat(childAlert).isInstanceOf(ChildAlert.class);
 		try {
-			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/ChildAlertEmpty.json"), ChildAlert.class));
+			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/childAlertEmpty.json"), ChildAlert.class));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void PhoneAlert_Ok_ReturnPhoneList(){
+		// GIVEN
+		int station = 3;
+		when(personGetService.personRepository.findPersonEntitiesByAddressEntityContainingSpecificStation(station)).thenReturn(personEntityListwithChild);
+
+		// WHEN
+		PhoneAlert phoneAlert = personGetService.getPhoneAlert(station);
+
+		// THEN
+		verify(personGetService.personRepository, times(1)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
+		assertThat(phoneAlert).isInstanceOf(PhoneAlert.class);
+		try {
+			assertThat(phoneAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/phoneAlert_200.json"), PhoneAlert.class));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
