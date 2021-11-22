@@ -99,6 +99,7 @@ class PersonGetServiceTests {
 
 		PersonEntity child = new PersonEntity();
 		child.setMedications(medicationEntities);
+		child.setAddressEntity(addressEntity);
 		child.setPhone(phone);
 		child.setAllergies(allergeneEntities);
 		child.setMedications(medicationEntities);
@@ -198,7 +199,7 @@ class PersonGetServiceTests {
 		verify(personGetService.personRepository, times(1)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
 		assertThat(floodStation).isInstanceOf(FloodStation.class);
 		try {
-			assertThat(floodStation).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/phoneAlert_200.json"), FloodStation.class));
+			assertThat(floodStation).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/floodstation_200.json"), FloodStation.class));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -5,15 +5,58 @@
       "city": "Culver",
       "zip": "97451",
       "persons": [{
-
-        "allergies": {},
-        "medications": {}
+        "firstName": "John",
+        "lastName": "Boyd",
+        "allergies": {
+          "id": "1",
+          "allegene": "nillacilan"
+        },
+        "medications": [
+          {
+            "id": "1",
+            "medicineEntity": {
+              "id": "1",
+              "medicineName": "aznol"
+            },
+            "dosage": "350"
+          },
+          {
+            "id": "2",
+            "medicineEntity": {
+              "id": "2",
+              "medicineName": "hydrapermazol"
+            },
+            "dosage": "100"
+          }
+        ]
       },
-
+        {
+          "firstName": "Tenley",
+          "lastName": "Boyd",
+          "allergies": {
+            "id": "1",
+            "allegene": "nillacilan"
+          },
+          "medications": [
+            {
+              "id": "1",
+              "medicineEntity": {
+                "id": "1",
+                "medicineName": "aznol"
+              },
+              "dosage": "350"
+            },
+            {
+              "id": "2",
+              "medicineEntity": {
+                "id": "2",
+                "medicineName": "hydrapermazol"
+              },
+              "dosage": "100"
+            }
+          ]
+        }
       ]
-
-      }
-
     }
   ]
 }
