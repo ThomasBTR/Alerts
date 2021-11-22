@@ -317,11 +317,13 @@
           {
             "name": "firestation",
             "in": "query",
+            "style": "form",
+            "explode": false,
             "description": "firestation ID",
             "required": true,
             "allowEmptyValue": false,
             "schema": {
-              "type": "string"
+              "type": "array"
             }
           }
         ],

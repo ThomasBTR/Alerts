@@ -1,0 +1,38 @@
+{
+  "$id": "personsInfo.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "medical record",
+  "type": "object",
+  "required": [
+    "firstName",
+    "lastName"
+  ],
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string",
+      "pattern": "^((.)?\\d{3})?(-|\\s)?\\d{3}(-|\\s)?\\d{4}$"
+    },
+    "medications": {
+      "type": "object",
+      "properties": {
+        "medications": {
+          "$ref": "medications.schema.json"
+        }
+      }
+    },
+    "allergies": {
+      "type": "object",
+      "properties": {
+        "allegies": {
+          "$ref": "allergies.schema.json"
+        }
+      }
+    }
+  }
+}

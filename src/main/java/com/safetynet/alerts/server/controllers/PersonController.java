@@ -3,13 +3,8 @@ package com.safetynet.alerts.server.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynet.alerts.server.services.PersonGetService;
 import com.safetynet.alerts.server.services.PersonsPostService;
-import io.swagger.api.AddPersonsApi;
-import io.swagger.api.ChildAlertApi;
-import io.swagger.api.PhoneAlertApi;
-import io.swagger.model.ChildAlert;
-import io.swagger.model.PersonsReq;
-import io.swagger.model.PersonsRsp;
-import io.swagger.model.PhoneAlert;
+import io.swagger.api.*;
+import io.swagger.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAlertApi {
+public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAlertApi, FireApi, FloodStationApi {
 
 	@Autowired
 	protected HttpServletRequest request;
@@ -45,6 +42,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 		return response;
 	}
 
+
 	@Override
 	public Optional<ObjectMapper> getObjectMapper() {
 		return AddPersonsApi.super.getObjectMapper();
@@ -58,6 +56,32 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 	@Override
 	public Optional<String> getAcceptHeader() {
 		return AddPersonsApi.super.getAcceptHeader();
+	}
+
+	@Override
+	public ResponseEntity<FloodStation> getAllPersonsInfosFromFirestationID(List firestation) {
+		ResponseEntity<FloodStation> response = null;
+
+		try {
+			response = ResponseEntity.ok(personGetService.getFloodStation(firestation));
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
+
+		return response;
+	}
+
+	@Override
+	public ResponseEntity<Fire> getPersonsInfosFromAddress(String address) {
+		ResponseEntity<Fire> response = null;
+
+		try {
+			response = ResponseEntity.ok(personGetService.getFireBody(address));
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
+
+		return response;
 	}
 
 	@Override

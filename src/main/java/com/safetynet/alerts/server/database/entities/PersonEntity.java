@@ -5,13 +5,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "persons")
-public class PersonEntity {
+public class PersonEntity implements Comparable<PersonEntity> {
 
 	@EmbeddedId
 	private NameEntity nameEntity;
@@ -42,4 +43,18 @@ public class PersonEntity {
 		this.allergies = allergies;
 		this.medications = medications;
 	}
+
+	@Override
+	public int compareTo(PersonEntity o) {
+		return 0;
+	}
+
+
+	public static class Comparators {
+		public static final Comparator<PersonEntity> ADDRESS = (PersonEntity person1, PersonEntity person2) -> person1.addressEntity.getAddress().compareTo(person2.addressEntity.getAddress());
+
+	}
+
+
+
 }

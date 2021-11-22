@@ -1,18 +1,16 @@
 {
   "$id": "flood_station.get.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "required":[
-    "phones"
+  "required": [
+    "address"
   ],
   "type": "object",
   "properties": {
-    "phones": {
+    "addresses": {
       "type": "array",
-      "description": "array of phone linked to firestation",
+      "description": "array of persons linked to firestation",
       "items": {
-        "adress": {
-          "$ref": "../../models_output/address.schema.json"
-        }
+        "$ref": "../../models_output/flood_station.schema.json"
       }
     }
   }

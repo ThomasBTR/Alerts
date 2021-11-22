@@ -1,9 +1,9 @@
 {
-  "$id": "address.schema.json",
+  "$id": "flood_station.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "required": [
-    "persons",
+    "personsInfo",
     "address"
   ],
   "properties": {
@@ -16,15 +16,12 @@
     "city": {
       "type": "string"
     },
-    "persons": {
-      "type": "array",
+    "personsInfo": {
+      "type": "object",
       "description": "An array of persons living at this address",
-      "items": {
-        "person": {
-          "$ref":"../models_output/person_info.schema.json"
-        },
-        "medical_records": {
-          "$ref": "../models_input/medical_record.schema.json"
+      "properties": {
+        "persons": {
+          "$ref": "personsInfo.schema.json"
         }
       }
     }

@@ -17,11 +17,11 @@
     },
     "adultCount": {
       "description": "Adult Count on the concerned firestation",
-      "type": "string"
+      "type": "integer"
     },
     "childCount": {
       "description": "child Count on the concerned firestation",
-      "type": "string"
+      "type": "integer"
     }
   }
 }

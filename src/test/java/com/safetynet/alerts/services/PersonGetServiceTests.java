@@ -5,6 +5,8 @@ import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.PersonGetService;
 import io.swagger.model.ChildAlert;
+import io.swagger.model.Fire;
+import io.swagger.model.FloodStation;
 import io.swagger.model.PhoneAlert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -157,7 +159,46 @@ class PersonGetServiceTests {
 		verify(personGetService.personRepository, times(1)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
 		assertThat(phoneAlert).isInstanceOf(PhoneAlert.class);
 		try {
-			assertThat(phoneAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/phoneAlert_200.json"), PhoneAlert.class));
+			assertThat(phoneAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/phoneAlert_200.json"), PhoneAlert.class));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void Fire_Ok_ReturnFire_Get_Json(){
+		// GIVEN
+		when(personGetService.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithChild);
+
+		// WHEN
+		Fire fireBody = personGetService.getFireBody(address);
+
+		// THEN
+		verify(personGetService.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
+		assertThat(fireBody).isInstanceOf(Fire.class);
+		try {
+			assertThat(fireBody).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/fire_200.json"), Fire.class));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void FloodStation_Ok_ReturnFloodStation_Body(){
+		// GIVEN
+		int station = 3;
+		List<Integer> firestationList = new ArrayList<>();
+		firestationList.add(station);
+		when(personGetService.personRepository.findPersonEntitiesByAddressEntityContainingSpecificStation(station)).thenReturn(personEntityListwithChild);
+
+		// WHEN
+		FloodStation floodStation = personGetService.getFloodStation(firestationList);
+
+		// THEN
+		verify(personGetService.personRepository, times(1)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
+		assertThat(floodStation).isInstanceOf(FloodStation.class);
+		try {
+			assertThat(floodStation).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/phoneAlert_200.json"), FloodStation.class));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
