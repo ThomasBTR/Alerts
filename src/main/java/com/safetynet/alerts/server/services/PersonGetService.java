@@ -150,7 +150,7 @@ public class PersonGetService {
 	private FloodStation1PersonsInfo createFloodstationPerson(PersonEntity person) {
 		FloodStation1PersonsInfo floodStation1PersonsInfo = new FloodStation1PersonsInfo();
 
-		PersonsInfo personsInfo = new PersonsInfo();
+		FloodstationPersonsInfo personsInfo = new FloodstationPersonsInfo();
 		personsInfo.setFirstName(person.getNameEntity().getFirstName());
 		personsInfo.setLastName(person.getNameEntity().getLastName());
 		personsInfo.setPhone(person.getPhone());
@@ -161,8 +161,8 @@ public class PersonGetService {
 		return floodStation1PersonsInfo;
 	}
 
-	private PersonsInfoMedications getpersonsInfoMedications(List<MedicationEntity> medications) {
-		PersonsInfoMedications personsInfoMedications = new PersonsInfoMedications();
+	private PersoninfosPersonInfoMedications getpersonsInfoMedications(List<MedicationEntity> medications) {
+		PersoninfosPersonInfoMedications personsInfoMedications = new PersoninfosPersonInfoMedications();
 		for (MedicationEntity medicationEntity :
 				medications) {
 			Medications medicationsInfos = new Medications();
@@ -179,8 +179,8 @@ public class PersonGetService {
 		return personsInfoMedications;
 	}
 
-	private PersonsInfoAllergies getAllergiesInfo(List<AllergeneEntity> allergies) {
-		PersonsInfoAllergies personsInfoAllergies = new PersonsInfoAllergies();
+	private PersoninfosPersonInfoAllergies getAllergiesInfo(List<AllergeneEntity> allergies) {
+		PersoninfosPersonInfoAllergies personsInfoAllergies = new PersoninfosPersonInfoAllergies();
 		for (AllergeneEntity allergeneEntity :
 				allergies) {
 			Allergies allergiesinfo = new Allergies();

@@ -1,5 +1,5 @@
 {
-  "$id": "personsInfo.schema.json",
+  "$id": "floodstation_personsInfo.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "medical record",
   "type": "object",

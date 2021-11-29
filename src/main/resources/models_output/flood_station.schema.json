@@ -21,7 +21,7 @@
       "description": "An array of persons living at this address",
       "properties": {
         "persons": {
-          "$ref": "personsInfo.schema.json"
+          "$ref": "floodstation_personsInfo.schema.json"
         }
       }
     }

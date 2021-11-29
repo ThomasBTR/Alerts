@@ -120,7 +120,7 @@ class PersonGetServiceTests {
 		ChildAlert childAlert = personGetService.getChildrenInfoFromAddress(address);
 
 		// THEN
-		verify(personGetService.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
+		verify(personGetService.personRepository, times(2)).findPersonEntityByAddressEntityEquals(address);
 		assertThat(childAlert).isInstanceOf(ChildAlert.class);
 		try {
 			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/childAlertWithChild.json"), ChildAlert.class));
@@ -138,7 +138,7 @@ class PersonGetServiceTests {
 		ChildAlert childAlert = personGetService.getChildrenInfoFromAddress(address);
 
 		// THEN
-		verify(personGetService.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
+		verify(personGetService.personRepository, times(3)).findPersonEntityByAddressEntityEquals(address);
 		assertThat(childAlert).isInstanceOf(ChildAlert.class);
 		try {
 			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/childAlertEmpty.json"), ChildAlert.class));
@@ -196,7 +196,7 @@ class PersonGetServiceTests {
 		FloodStation floodStation = personGetService.getFloodStation(firestationList);
 
 		// THEN
-		verify(personGetService.personRepository, times(1)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
+		verify(personGetService.personRepository, times(2)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
 		assertThat(floodStation).isInstanceOf(FloodStation.class);
 		try {
 			assertThat(floodStation).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/floodstation_200.json"), FloodStation.class));
