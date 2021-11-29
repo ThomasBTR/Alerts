@@ -96,6 +96,7 @@ class PersonGetServiceTests {
 		adult.setAllergies(allergeneEntities);
 		adult.setMedications(medicationEntities);
 		adult.setNameEntity(adultName);
+		adult.setEmail("jaboyd@email.com");
 
 		child = new PersonEntity();
 		child.setMedications(medicationEntities);
@@ -105,6 +106,7 @@ class PersonGetServiceTests {
 		child.setMedications(medicationEntities);
 		child.setBirthdate(LocalDate.of(2012, 2, 18));
 		child.setNameEntity(childName);
+		child.setEmail("tenz@email.com");
 
 		personEntityListwithChild.add(child);
 		personEntityListwithChild.add(adult);
@@ -221,6 +223,26 @@ class PersonGetServiceTests {
 		assertThat(personsInfos).isInstanceOf(PersonInfo.class);
 		try {
 			assertThat(personsInfos).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/personInfo_200.json"), PersonInfo.class));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void Email_Ok_ReturnEmails_Body(){
+		// GIVEN
+		String city = adult.getAddressEntity().getCity();
+
+		when(personGetService.personRepository.findPersonEntitiesByAddressEntityContainingCity(city)).thenReturn(personEntityListwithChild);
+
+		// WHEN
+		CityMailingList cityMailingList = personGetService.getCityMailingList(city);
+
+		// THEN
+		verify(personGetService.personRepository, times(1)).findPersonEntitiesByAddressEntityContainingCity(city);
+		assertThat(cityMailingList).isInstanceOf(CityMailingList.class);
+		try {
+			assertThat(cityMailingList).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/cityMailingList_200.json"), CityMailingList.class));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

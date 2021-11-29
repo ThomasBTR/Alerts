@@ -213,4 +213,16 @@ public class PersonGetService {
 	}
 
 
+	public CityMailingList getCityMailingList(String city) {
+		CityMailingList cityMailingList = new CityMailingList();
+
+		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityContainingCity(city);
+
+		for (PersonEntity person:
+			personEntities) {
+			cityMailingList.addEmailsItem(person.getEmail());
+		}
+
+		return cityMailingList;
+	}
 }

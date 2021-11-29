@@ -22,4 +22,7 @@ public interface PersonRepository extends JpaRepository<PersonEntity, Integer> {
 
 	@Query("SELECT p FROM PersonEntity p WHERE p.addressEntity.station =:variable")
 	List<PersonEntity> findPersonEntitiesByAddressEntityContainingSpecificStation(@Param("variable")int station);
+
+	@Query("SELECT p FROM PersonEntity p WHERE p.addressEntity.city =:variable")
+	List<PersonEntity> findPersonEntitiesByAddressEntityContainingCity(@Param("variable")String city);
 }

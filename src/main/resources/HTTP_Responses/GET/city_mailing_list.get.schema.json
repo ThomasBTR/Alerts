@@ -2,17 +2,17 @@
   "$id": "city_mailing_list.get.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "required":[
-    "phones"
+    "emails"
   ],
   "type": "object",
   "properties": {
-    "phones": {
+    "emails": {
       "type": "array",
       "description": "array of phone linked to firestation",
       "items": {
-        "email": {
-          "$ref": "../../models_output/email.schema.json"
-        }
+          "email": {
+            "type": "string"
+          }
       }
     }
   }
