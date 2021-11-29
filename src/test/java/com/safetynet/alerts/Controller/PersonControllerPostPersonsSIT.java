@@ -4,11 +4,8 @@ package com.safetynet.alerts.Controller;
 import com.google.inject.Inject;
 import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.controllers.PersonController;
-import com.safetynet.alerts.server.services.PersonsPostService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.safetynet.alerts.server.services.PersonPostService;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,8 +19,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = {PersonController.class, PersonsPostService.class})
+@WebMvcTest(controllers = {PersonController.class, PersonPostService.class})
 @ExtendWith(SpringExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PersonControllerPostPersonsSIT {
 
 	@Inject

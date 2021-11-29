@@ -2,7 +2,7 @@ package com.safetynet.alerts.server.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.safetynet.alerts.server.services.PersonGetService;
-import com.safetynet.alerts.server.services.PersonsPostService;
+import com.safetynet.alerts.server.services.PersonPostService;
 import io.swagger.api.*;
 import io.swagger.model.*;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 	protected HttpServletRequest request;
 
 	@Autowired
-	PersonsPostService personsPostService;
+	PersonPostService personPostService;
 
 	PersonGetService personGetService;
 
@@ -116,7 +116,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 		ResponseEntity<PersonsRsp> response = null;
 
 		try {
-			response = ResponseEntity.ok(personsPostService.addPersons(body));
+			response = ResponseEntity.ok(personPostService.addPersons(body));
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}

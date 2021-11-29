@@ -542,7 +542,14 @@
         },
         "responses": {
           "200": {
-            "description": "Accepted"
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "models_output/personRsp.schema.json"
+                }
+              }
+            }
           }
         }
       },
@@ -552,18 +559,38 @@
         ],
         "summary": "Update a person to the database",
         "operationId": "UpdatePerson",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "models_input/personReq.schema.json"
-              }
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "query",
+            "description": "first Name for the person that will be modified",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "description": "Last Name for the person that will be modified",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Accepted"
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "models_output/personRsp.schema.json"
+                }
+              }
+            }
           }
         }
       },
