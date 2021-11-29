@@ -1,0 +1,34 @@
+{
+  "address": [
+    {
+      "persons": [
+        {
+          "firstName": "John",
+          "lastName": "Boyd",
+          "allergies": {
+            "id": "1",
+            "allegene": "nillacilan"
+          },
+          "medications": [
+            {
+              "id": "1",
+              "medicineEntity": {
+                "id": "1",
+                "medicineName": "aznol"
+              },
+              "dosage": "350"
+            },
+            {
+              "id": "2",
+              "medicineEntity": {
+                "id": "2",
+                "medicineName": "hydrapermazol"
+              },
+              "dosage": "100"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

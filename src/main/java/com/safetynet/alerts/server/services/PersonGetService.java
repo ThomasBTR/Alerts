@@ -147,6 +147,26 @@ public class PersonGetService {
 		return floodStation;
 	}
 
+	public PersonInfo getPersonsInfos(String firstName, String lastName) {
+
+		PersonEntity personEntity = personRepository.findPersonEntityByNameEntityLike(firstName,lastName);
+
+		Personinfos personinfos = new Personinfos();
+
+		personinfos.setAge(getAge(personEntity.getBirthdate()));
+		personinfos.setAllergies(getAllergiesInfo(personEntity.getAllergies()));
+		personinfos.setMedications(getpersonsInfoMedications(personEntity.getMedications()));
+		personinfos.setFirstName(firstName);
+		personinfos.setLastName(lastName);
+		personinfos.setEmail(personEntity.getEmail());
+
+		PersonInfo personInfo = new PersonInfo();
+		personInfo.addPersonsinfosItem(personinfos);
+
+		return personInfo;
+	}
+
+
 	private FloodStation1PersonsInfo createFloodstationPerson(PersonEntity person) {
 		FloodStation1PersonsInfo floodStation1PersonsInfo = new FloodStation1PersonsInfo();
 
@@ -161,8 +181,8 @@ public class PersonGetService {
 		return floodStation1PersonsInfo;
 	}
 
-	private PersoninfosPersonInfoMedications getpersonsInfoMedications(List<MedicationEntity> medications) {
-		PersoninfosPersonInfoMedications personsInfoMedications = new PersoninfosPersonInfoMedications();
+	private PersoninfosMedications getpersonsInfoMedications(List<MedicationEntity> medications) {
+		PersoninfosMedications personsInfoMedications = new PersoninfosMedications();
 		for (MedicationEntity medicationEntity :
 				medications) {
 			Medications medicationsInfos = new Medications();
@@ -179,8 +199,8 @@ public class PersonGetService {
 		return personsInfoMedications;
 	}
 
-	private PersoninfosPersonInfoAllergies getAllergiesInfo(List<AllergeneEntity> allergies) {
-		PersoninfosPersonInfoAllergies personsInfoAllergies = new PersoninfosPersonInfoAllergies();
+	private PersoninfosAllergies getAllergiesInfo(List<AllergeneEntity> allergies) {
+		PersoninfosAllergies personsInfoAllergies = new PersoninfosAllergies();
 		for (AllergeneEntity allergeneEntity :
 				allergies) {
 			Allergies allergiesinfo = new Allergies();
@@ -191,4 +211,6 @@ public class PersonGetService {
 
 		return personsInfoAllergies;
 	}
+
+
 }

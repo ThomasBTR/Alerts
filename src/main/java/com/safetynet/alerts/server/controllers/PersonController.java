@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAlertApi, FireApi, FloodStationApi {
+public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAlertApi, FireApi, FloodStationApi, PersonInfoApi {
 
 	@Autowired
 	protected HttpServletRequest request;
@@ -55,6 +55,19 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 	@Override
 	public Optional<String> getAcceptHeader() {
 		return AddPersonsApi.super.getAcceptHeader();
+	}
+
+	@Override
+	public ResponseEntity<PersonInfo> getPersonInfos(String firstName, String lastName) {
+		ResponseEntity<PersonInfo> response = null;
+
+		try {
+			response = ResponseEntity.ok(personGetService.getPersonsInfos(firstName,lastName));
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
+
+		return response;
 	}
 
 	@Override

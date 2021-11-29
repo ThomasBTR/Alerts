@@ -4,10 +4,7 @@ import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.PersonGetService;
-import io.swagger.model.ChildAlert;
-import io.swagger.model.Fire;
-import io.swagger.model.FloodStation;
-import io.swagger.model.PhoneAlert;
+import io.swagger.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,6 +31,9 @@ class PersonGetServiceTests {
 	PersonRepository personRepository;
 
 	PersonGetService personGetService;
+
+	PersonEntity adult = null;
+	PersonEntity child = null;
 
 
 	List<PersonEntity> personEntityListwithChild;
@@ -89,7 +89,7 @@ class PersonGetServiceTests {
 		childName.setFirstName("Tenley");
 		childName.setLastName("Boyd");
 
-		PersonEntity adult = new PersonEntity();
+		adult = new PersonEntity();
 		adult.setBirthdate(LocalDate.of(1984, 3, 6));
 		adult.setAddressEntity(addressEntity);
 		adult.setPhone(phone);
@@ -97,7 +97,7 @@ class PersonGetServiceTests {
 		adult.setMedications(medicationEntities);
 		adult.setNameEntity(adultName);
 
-		PersonEntity child = new PersonEntity();
+		child = new PersonEntity();
 		child.setMedications(medicationEntities);
 		child.setAddressEntity(addressEntity);
 		child.setPhone(phone);
@@ -200,6 +200,27 @@ class PersonGetServiceTests {
 		assertThat(floodStation).isInstanceOf(FloodStation.class);
 		try {
 			assertThat(floodStation).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/floodstation_200.json"), FloodStation.class));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void PersonInfo_Ok_ReturnPersonInfo_Body(){
+		// GIVEN
+		String firstName = adult.getNameEntity().getFirstName();
+		String lastName = adult.getNameEntity().getLastName();
+
+		when(personGetService.personRepository.findPersonEntityByNameEntityLike(firstName,lastName)).thenReturn(adult);
+
+		// WHEN
+		PersonInfo personsInfos = personGetService.getPersonsInfos(firstName,lastName);
+
+		// THEN
+		verify(personGetService.personRepository, times(1)).findPersonEntityByNameEntityLike(firstName, lastName);
+		assertThat(personsInfos).isInstanceOf(PersonInfo.class);
+		try {
+			assertThat(personsInfos).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/personInfo_200.json"), PersonInfo.class));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
