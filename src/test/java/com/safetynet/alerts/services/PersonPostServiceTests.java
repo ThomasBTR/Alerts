@@ -127,10 +127,9 @@ public class PersonPostServiceTests {
 
 
 	@Test
-	void personPut_200_ReturnOKBody(){
+	void personPost_200_ReturnOKBody(){
 
 		// GIVEN
-
 		when(personPostService.personRepository.save(any(PersonEntity.class))).thenReturn(adult);
 
 		// WHEN
@@ -144,6 +143,19 @@ public class PersonPostServiceTests {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	@Test
+	void personDelete_200_ReturnVoid(){
+		// GIVEN
+		String firstName = adult.getNameEntity().getFirstName();
+		String lastName = adult.getNameEntity().getLastName();
+		// WHEN
+		personPostService.deletePerson(firstName, lastName);
+
+		// THEN
+		verify(personPostService.personRepository, times(1)).delete(personRepository.findPersonEntityByNameEntityLike(firstName,lastName));
 	}
 
 }

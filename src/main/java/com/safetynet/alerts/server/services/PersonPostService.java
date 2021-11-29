@@ -57,4 +57,30 @@ public class PersonPostService {
 			return null;
 		}
 	}
+
+	public PersonRsp updatePerson(PersonReq body) {
+		try{
+			PersonRsp personRsp;
+			PersonEntity personEntity = IPersonMapper.INSTANCE.personReqToPersonEntity(body);
+			personRepository.save(personEntity);
+			personRsp = IPersonMapper.INSTANCE.personEntityToPersonRsp(personEntity);
+
+			return personRsp;
+		}catch(Exception e){
+			logger.error(e.getMessage(),e.getStackTrace(),e);
+			return null;
+		}
+	}
+
+	public void deletePerson(String firstName, String lastName) {
+
+		try{
+			personRepository.delete(personRepository.findPersonEntityByNameEntityLike(firstName,lastName));
+
+		}catch(Exception e){
+			logger.error(e.getMessage(),e.getStackTrace(),e);
+		}
+	}
+
+
 }

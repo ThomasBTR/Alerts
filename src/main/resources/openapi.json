@@ -581,6 +581,15 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "models_input/personReq.schema.json"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Accepted",
