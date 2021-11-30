@@ -150,11 +150,28 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "stationNumber",
+            "in": "query",
+            "description": "stationNumber",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Accepted"
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/POST/stationNumber.post.schema.json"
+                }
+              }
+            }
           }
         }
       },
@@ -169,16 +186,33 @@
             "name": "address",
             "in": "query",
             "description": "address",
-            "required": true,
+            "required": false,
             "allowEmptyValue": false,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "stationNumber",
+            "in": "query",
+            "description": "stationNumber",
+            "required": false,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Accepted"
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/PUT/stationNumber.put.schema.json"
+                }
+              }
+            }
           }
         }
       },
@@ -198,11 +232,28 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "stationNumber",
+            "in": "query",
+            "description": "stationNumber",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Accepted"
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "HTTP_Responses/DELETE/stationNumber.delete.schema.json"
+                }
+              }
+            }
           }
         }
       }

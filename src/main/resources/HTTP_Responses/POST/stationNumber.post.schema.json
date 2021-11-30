@@ -1,0 +1,24 @@
+{
+  "$id": "stationNumber.post.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "required":[
+    "address",
+    "stationNumber",
+    "status"
+  ],
+  "type": "object",
+  "properties": {
+    "address": {
+      "type": "string",
+      "description": "address linked to firestation"
+    },
+    "stationNumber": {
+      "description": "firestation number linked to the address",
+      "type": "integer"
+    },
+    "status": {
+      "description": "station status",
+      "type": "string"
+    }
+  }
+}
