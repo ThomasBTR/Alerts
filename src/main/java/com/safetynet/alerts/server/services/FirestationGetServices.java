@@ -1,5 +1,6 @@
 package com.safetynet.alerts.server.services;
 
+import com.safetynet.alerts.server.constants.EActionsProceedConstants;
 import com.safetynet.alerts.server.constants.EObjectConstants;
 import com.safetynet.alerts.server.constants.EStatusConstants;
 import com.safetynet.alerts.server.database.entities.AddressEntity;
@@ -8,7 +9,8 @@ import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.mapping.IFirestationMapper;
 import io.swagger.model.Firestation;
 import io.swagger.model.PersonReq;
-import io.swagger.model.StationNumber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,7 @@ public class FirestationGetServices {
 	public PersonRepository personRepository;
 
 
-//	private static final Logger logger = LoggerFactory.getLogger(FirestationGetServices.class);
+	private static final Logger logger = LoggerFactory.getLogger(FirestationGetServices.class);
 
 	FirestationGetServices(){}
 
@@ -31,8 +33,10 @@ public class FirestationGetServices {
 	}
 
 	public Firestation getPersonsInfosFromFirestationID(Integer stationNumber) {
+		logger.debug(EActionsProceedConstants.FIRESTATIONINFOS_FROMID_START.getValue(), stationNumber);
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityStation(stationNumber);
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), personEntities.size());
 		int adultCount = 0;
 		int childCount = 0;
 
@@ -52,27 +56,41 @@ public class FirestationGetServices {
 		firestationResponseBody.setChildCount(childCount);
 		firestationResponseBody.setPersons(persons);
 
-		//TODO: Add logs
+		logger.info(EActionsProceedConstants.FIRESTATIONINFOS_FROMID_SUCCESS.getValue(), stationNumber, persons.size(), childCount, adultCount);
 
 		return firestationResponseBody;
 	}
 
-	public StationNumber addFirestationMappingToASpecifiedAddress(Integer stationNumber, String address) {
-		StationNumber stationNumberObject = new StationNumber();
+	public void addFirestationMappingToASpecifiedAddress(Integer stationNumber, String address) {
+		logger.debug(EActionsProceedConstants.ADDING_FIRESTATION_START.getValue(), stationNumber, address);
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(address);
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
 
 		for (PersonEntity person :
 				personEntities) {
 			AddressEntity addressEntity = person.getAddressEntity();
 			addressEntity.setStation(stationNumber);
 			person.setAddressEntity(addressEntity);
-			//TODO: Add logs
+
 		}
-		stationNumberObject.setStationNumber(stationNumber);
-		stationNumberObject.setAddress(address);
-		stationNumberObject.setStatus(String.format(EStatusConstants.ADDED.getValue(), EObjectConstants.STATION.getObject()));
+
+		logger.info(EActionsProceedConstants.ADDING_FIRESTATION_SUCCESS.getValue(), stationNumber, address);
+	}
+
+	public void updateFirestationMappingToASpecifiedAddress(int station, String address) {
+		logger.debug(EActionsProceedConstants.ADDING_FIRESTATION_START.getValue(), station, address);
+
+		List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(address);
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
+
+		for (PersonEntity person :
+				personEntities) {
+			AddressEntity addressEntity = person.getAddressEntity();
+			addressEntity.setStation(station);
+			person.setAddressEntity(addressEntity);
+		}
+
 		//TODO: Add logs
-		return stationNumberObject;
 	}
 }

@@ -1,12 +1,9 @@
 package com.safetynet.alerts.services;
 
-import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.PersonPostService;
 import io.swagger.model.PersonReq;
-import io.swagger.model.PersonRsp;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -15,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,16 +129,22 @@ public class PersonPostServiceTests {
 		when(personPostService.personRepository.save(any(PersonEntity.class))).thenReturn(adult);
 
 		// WHEN
-		PersonRsp personRsp = personPostService.addPerson(personReq);
+		personPostService.addPerson(personReq);
 
 		// THEN
 		verify(personPostService.personRepository, times(1)).save(any(PersonEntity.class));
-		AssertionsForClassTypes.assertThat(personRsp).isInstanceOf(PersonRsp.class);
-		try {
-			AssertionsForClassTypes.assertThat(personRsp).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/person_200.json"), PersonRsp.class));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	}
+
+	@Test
+	void personPut_200_ReturnOKBody(){
+		// GIVEN
+		when(personPostService.personRepository.save(any(PersonEntity.class))).thenReturn(adult);
+
+		// WHEN
+		personPostService.updatePerson(personReq);
+
+		// THEN
+		verify(personPostService.personRepository, times(1)).save(any(PersonEntity.class));
 	}
 
 

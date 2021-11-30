@@ -2,7 +2,8 @@ package com.safetynet.alerts.server.constants;
 
 public enum EObjectConstants {
 	STATION("Station"),
-	FIRESTATION("Firestation");
+	FIRESTATION("Firestation"),
+	PERSON("Person");
 
 	private final String object;
 

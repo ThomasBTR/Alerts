@@ -163,15 +163,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "HTTP_Responses/POST/stationNumber.post.schema.json"
-                }
-              }
-            }
+          "201": {
+            "description": "Created"
           }
         }
       },
@@ -204,15 +197,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "HTTP_Responses/PUT/stationNumber.put.schema.json"
-                }
-              }
-            }
+          "201": {
+            "description": "Created"
           }
         }
       },
@@ -245,15 +231,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "HTTP_Responses/DELETE/stationNumber.delete.schema.json"
-                }
-              }
-            }
+          "204": {
+            "description": "Accepted-No-Content"
           }
         }
       }
@@ -485,15 +464,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "HTTP_Responses/POST/medical_record.post.schema.json"
-                }
-              }
-            }
+          "201": {
+            "description": "Created"
           }
         }
       },
@@ -535,8 +507,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Accepted"
+          "201": {
+            "description": "Created"
           }
         }
       },
@@ -569,8 +541,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Accepted"
+          "204": {
+            "description": "Accepted-No-Content"
           }
         }
       }
@@ -592,15 +564,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "models_output/personRsp.schema.json"
-                }
-              }
-            }
+          "201": {
+            "description": "Created"
           }
         }
       },
@@ -642,15 +607,8 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "models_output/personRsp.schema.json"
-                }
-              }
-            }
+          "201": {
+            "description": "Created"
           }
         }
       },
@@ -683,8 +641,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Accepted"
+          "204": {
+            "description": "Accepted-No-Content"
           }
         }
       }

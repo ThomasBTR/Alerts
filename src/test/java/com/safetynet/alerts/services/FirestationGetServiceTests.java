@@ -5,7 +5,6 @@ import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.FirestationGetServices;
 import io.swagger.model.Firestation;
-import io.swagger.model.StationNumber;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -136,6 +135,20 @@ class FirestationGetServiceTests {
 	}
 
 	@Test
+	void StationNumberAdd_Ok_ReturnStationNumberBody(){
+		// GIVEN
+		int station = 3;
+
+		when(firestationGetServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithChild);
+
+		// WHEN
+		firestationGetServices.addFirestationMappingToASpecifiedAddress(station, address);
+
+		// THEN
+		verify(firestationGetServices.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
+	}
+
+	@Test
 	void StationNumberUpdate_Ok_ReturnStationNumberBody(){
 		// GIVEN
 		int station = 3;
@@ -143,15 +156,10 @@ class FirestationGetServiceTests {
 		when(firestationGetServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithChild);
 
 		// WHEN
-		StationNumber stationNumber = firestationGetServices.addFirestationMappingToASpecifiedAddress(station, address);
+		firestationGetServices.updateFirestationMappingToASpecifiedAddress(station, address);
 
 		// THEN
 		verify(firestationGetServices.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
-		assertThat(stationNumber).isInstanceOf(StationNumber.class);
-		try {
-			assertThat(stationNumber).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/StationNumberUpdate_200.json"), StationNumber.class));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 }

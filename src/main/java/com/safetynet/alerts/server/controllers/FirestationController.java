@@ -8,7 +8,6 @@ import io.swagger.api.StationNumberApi;
 import io.swagger.model.AddressesRsp;
 import io.swagger.model.Firestation;
 import io.swagger.model.Firestations;
-import io.swagger.model.StationNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
-public class FirestationController implements AddFirestationsApi, StationNumberApi {
+public class FirestationController implements AddFirestationsApi, StationNumberApi{
 
 	@Autowired
 	protected HttpServletRequest request;
@@ -49,24 +48,6 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 	}
 
 	@Override
-	public ResponseEntity<StationNumber> addFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
-		ResponseEntity<StationNumber> response = null;
-
-		try {
-			response = ResponseEntity.ok(firestationGetServices.addFirestationMappingToASpecifiedAddress(stationNumber, address));
-		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
-		}
-
-		return response;
-	}
-
-	@Override
-	public ResponseEntity<StationNumber> deleteFirestationMappingToSpecifiedAddress(String address, String stationNumber) {
-		return StationNumberApi.super.deleteFirestationMappingToSpecifiedAddress(address, stationNumber);
-	}
-
-	@Override
 	public ResponseEntity<AddressesRsp> addFirestationToDatabase(Firestations body) {
 		ResponseEntity<AddressesRsp> response = null;
 
@@ -93,7 +74,19 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 	}
 
 	@Override
-	public ResponseEntity<StationNumber> updateFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
+	public ResponseEntity<Void> addFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
+
+
+		return StationNumberApi.super.addFirestationMappingToSpecifiedAddress(address, stationNumber);
+	}
+
+	@Override
+	public ResponseEntity<Void> updateFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
 		return StationNumberApi.super.updateFirestationMappingToSpecifiedAddress(address, stationNumber);
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteFirestationMappingToSpecifiedAddress(String address, String stationNumber) {
+		return StationNumberApi.super.deleteFirestationMappingToSpecifiedAddress(address, stationNumber);
 	}
 }

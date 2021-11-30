@@ -1,6 +1,7 @@
 package com.safetynet.alerts.server.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safetynet.alerts.server.constants.EActionsProceedConstants;
 import com.safetynet.alerts.server.services.PersonGetService;
 import com.safetynet.alerts.server.services.PersonPostService;
 import io.swagger.api.*;
@@ -96,6 +97,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 		return response;
 	}
 
+
 	@Override
 	public Optional<ObjectMapper> getObjectMapper() {
 		return AddPersonsApi.super.getObjectMapper();
@@ -112,45 +114,41 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 	}
 
 	@Override
-	public ResponseEntity<PersonRsp> addPerson(PersonReq body) {
-		ResponseEntity<PersonRsp> response = null;
-
+	public ResponseEntity<Void> addPerson(PersonReq body) {
 		try {
-			response = ResponseEntity.ok(personPostService.addPerson(body));
-			logger.info(String.format("%s %s added to the database", body.getFirstName(),body.getLastName()), response);
+			personPostService.addPerson(body);
+			logger.info(EActionsProceedConstants.ADDING_PERSON_SUCCESS.getValue(), body.getFirstName(),body.getLastName());
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
 
-		return response;
+		return PersonApi.super.addPerson(body);
 	}
+
+
+
+
 
 	@Override
 	public ResponseEntity<Void> deletePerson(String firstName, String lastName) {
-		ResponseEntity<Void> response = null;
 		try {
 			personPostService.deletePerson(firstName,lastName);
-			response = (ResponseEntity<Void>) ResponseEntity.noContent();
-			logger.info(String.format("%s %s deleted in the database", firstName, lastName), response);
+			logger.info(EActionsProceedConstants.DELETING_PERSON_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
-
-		return response;
+		return PersonApi.super.deletePerson(firstName, lastName);
 	}
-
 	@Override
-	public ResponseEntity<PersonRsp> updatePerson(String firstName, String lastName, PersonReq body) {
-		ResponseEntity<PersonRsp> response = null;
-
+	public ResponseEntity<Void> updatePerson(String firstName, String lastName, PersonReq body) {
 		try {
-			response = ResponseEntity.ok(personPostService.updatePerson(body));
-			logger.info(String.format("%s %s updated in the database", firstName, lastName), response);
+			personPostService.updatePerson(body);
+			logger.info(EActionsProceedConstants.UPDATING_PERSON_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
 
-		return response;
+		return PersonApi.super.updatePerson(firstName, lastName, body);
 	}
 
 	@Override
@@ -159,7 +157,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personPostService.addPersons(body));
-			logger.info("Multiple Persons added in database", response);
+			logger.info(EActionsProceedConstants.ADDING_MULTIPLE_PERSONS_SUCCESS.getValue());
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
