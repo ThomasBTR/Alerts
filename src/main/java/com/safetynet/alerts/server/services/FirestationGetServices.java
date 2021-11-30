@@ -6,7 +6,6 @@ import com.safetynet.alerts.server.mapping.IFirestationMapper;
 import io.swagger.model.Firestation;
 import io.swagger.model.PersonReq;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,11 +15,17 @@ import java.util.List;
 public class FirestationGetServices {
 
 	@Autowired
-	PersonRepository personRepository;
+	public PersonRepository personRepository;
 
-	public ResponseEntity<Firestation> processFirestationID(String stationNumber) {
+	FirestationGetServices(){}
 
-		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityStation(Integer.parseInt(stationNumber));
+	public FirestationGetServices(PersonRepository personRepository){
+		this.personRepository = personRepository;
+	}
+
+	public Firestation getPersonsInfosFromFirestationID(Integer stationNumber) {
+
+		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityStation(stationNumber);
 		int adultCount = 0;
 		int childCount = 0;
 
@@ -40,6 +45,6 @@ public class FirestationGetServices {
 		firestationResponseBody.setChildCount(childCount);
 		firestationResponseBody.setPersons(persons);
 
-		return ResponseEntity.ok(firestationResponseBody);
+		return firestationResponseBody;
 	}
 }
