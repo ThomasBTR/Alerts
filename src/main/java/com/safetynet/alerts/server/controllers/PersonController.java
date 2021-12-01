@@ -64,6 +64,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getFloodStation(firestation));
+			logger.info(EActionsProceedConstants.FLOODSTATION_SUCCESS.getValue(), firestation.size());
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
@@ -77,6 +78,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getFireBody(address));
+			logger.info(EActionsProceedConstants.FIRE_SUCCESS.getValue(), address);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
@@ -90,6 +92,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getPhoneAlert(firestation));
+			logger.info(EActionsProceedConstants.PHONEALERT_SUCCESS.getValue(), firestation);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
@@ -124,10 +127,6 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		return PersonApi.super.addPerson(body);
 	}
-
-
-
-
 
 	@Override
 	public ResponseEntity<Void> deletePerson(String firstName, String lastName) {
@@ -171,6 +170,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getCityMailingList(city));
+			logger.info(EActionsProceedConstants.CITYMAILINGLIST_SUCCESS.getValue(), city);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}

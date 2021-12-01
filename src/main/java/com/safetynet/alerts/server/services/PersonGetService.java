@@ -1,5 +1,8 @@
 package com.safetynet.alerts.server.services;
 
+import com.safetynet.alerts.server.constants.EActionsProceedConstants;
+import com.safetynet.alerts.server.constants.EObjectConstants;
+import com.safetynet.alerts.server.constants.EStatusConstants;
 import com.safetynet.alerts.server.database.entities.AllergeneEntity;
 import com.safetynet.alerts.server.database.entities.MedicationEntity;
 import com.safetynet.alerts.server.database.entities.PersonEntity;
@@ -76,11 +79,11 @@ public class PersonGetService {
 	}
 
 	public PhoneAlert getPhoneAlert(int station) {
-
+		logger.debug(EActionsProceedConstants.PHONEALERT_START.getValue(), station);
 		PhoneAlert phoneAlert = new PhoneAlert();
 
 		List<PersonEntity> personEntityList = personRepository.findPersonEntitiesByAddressEntityContainingSpecificStation(station);
-
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), personEntityList.size());
 		for (PersonEntity person :
 				personEntityList) {
 			phoneAlert.addPhonesItem(person.getPhone());
@@ -90,9 +93,11 @@ public class PersonGetService {
 	}
 
 	public Fire getFireBody(String address) {
+		logger.debug(EActionsProceedConstants.PHONEALERT_START.getValue(), address);
 		Fire fire = new Fire();
 
 		List<PersonEntity> personEntityList = personRepository.findPersonEntityByAddressEntityEquals(address);
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), personEntityList.size());
 
 		Integer adultCount = 0;
 		Integer childCount = 0;
@@ -119,12 +124,13 @@ public class PersonGetService {
 	}
 
 	public FloodStation getFloodStation(List<Integer> firestationList) {
+		logger.debug(EActionsProceedConstants.FLOODSTATION_START.getValue(), firestationList.size());
 		FloodStation floodStation = new FloodStation();
 
 		for (Integer station :
 				firestationList) {
 			List<PersonEntity> personEntityList = personRepository.findPersonEntitiesByAddressEntityContainingSpecificStation(station);
-
+			logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), personEntityList.size());
 			personEntityList.sort(PersonEntity.Comparators.ADDRESS);
 
 			FloodStation1 floodStation1 = new FloodStation1();
@@ -214,10 +220,11 @@ public class PersonGetService {
 
 
 	public CityMailingList getCityMailingList(String city) {
+		logger.debug(EActionsProceedConstants.CITYMAILINGLIST_START.getValue(), city);
 		CityMailingList cityMailingList = new CityMailingList();
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityContainingCity(city);
-
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), personEntities.size());
 		for (PersonEntity person:
 			personEntities) {
 			cityMailingList.addEmailsItem(person.getEmail());

@@ -72,6 +72,7 @@ public class FirestationGetServices {
 			AddressEntity addressEntity = person.getAddressEntity();
 			addressEntity.setStation(stationNumber);
 			person.setAddressEntity(addressEntity);
+			personRepository.save(person);
 
 		}
 
@@ -79,7 +80,7 @@ public class FirestationGetServices {
 	}
 
 	public void updateFirestationMappingToASpecifiedAddress(int station, String address) {
-		logger.debug(EActionsProceedConstants.ADDING_FIRESTATION_START.getValue(), station, address);
+		logger.debug(EActionsProceedConstants.UPDATING_FIRESTATION_START.getValue(), station, address);
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(address);
 		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
@@ -89,8 +90,22 @@ public class FirestationGetServices {
 			AddressEntity addressEntity = person.getAddressEntity();
 			addressEntity.setStation(station);
 			person.setAddressEntity(addressEntity);
+			personRepository.save(person);
 		}
+	}
 
-		//TODO: Add logs
+	public void deleteFirestationMappingToASpecifiedAddress(int station, String address) {
+		logger.debug(EActionsProceedConstants.DELETING_FIRESTATION_START.getValue(), station, address);
+
+		List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(address);
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
+
+		for (PersonEntity person :
+				personEntities) {
+			AddressEntity addressEntity = person.getAddressEntity();
+			addressEntity.setStation(station);
+			person.setAddressEntity(addressEntity);
+			personRepository.save(person);
+		}
 	}
 }

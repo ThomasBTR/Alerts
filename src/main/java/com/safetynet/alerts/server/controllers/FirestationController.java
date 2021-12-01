@@ -1,6 +1,7 @@
 package com.safetynet.alerts.server.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safetynet.alerts.server.constants.EActionsProceedConstants;
 import com.safetynet.alerts.server.services.FirestationGetServices;
 import com.safetynet.alerts.server.services.FirestationPostServices;
 import io.swagger.api.AddFirestationsApi;
@@ -75,18 +76,34 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 
 	@Override
 	public ResponseEntity<Void> addFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
-
-
+		try {
+			firestationGetServices.addFirestationMappingToASpecifiedAddress(stationNumber, address);
+			logger.info(EActionsProceedConstants.ADDING_FIRESTATION_SUCCESS.getValue(), stationNumber, address);
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
 		return StationNumberApi.super.addFirestationMappingToSpecifiedAddress(address, stationNumber);
 	}
 
 	@Override
 	public ResponseEntity<Void> updateFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
+		try {
+			firestationGetServices.updateFirestationMappingToASpecifiedAddress(stationNumber, address);
+			logger.info(EActionsProceedConstants.UPDATING_FIRESTATION_SUCCESS.getValue(), stationNumber, address);
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
 		return StationNumberApi.super.updateFirestationMappingToSpecifiedAddress(address, stationNumber);
 	}
 
 	@Override
-	public ResponseEntity<Void> deleteFirestationMappingToSpecifiedAddress(String address, String stationNumber) {
+	public ResponseEntity<Void> deleteFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
+		try {
+			firestationGetServices.deleteFirestationMappingToASpecifiedAddress(stationNumber, address);
+			logger.info(EActionsProceedConstants.DELETING_FIRESTATION_SUCCESS.getValue(), stationNumber, address);
+		} catch (Exception e) {
+			logger.warn(e.getMessage(), e);
+		}
 		return StationNumberApi.super.deleteFirestationMappingToSpecifiedAddress(address, stationNumber);
 	}
 }
