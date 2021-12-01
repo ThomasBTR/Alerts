@@ -34,10 +34,13 @@ public class PersonGetService {
 	}
 
 	public ChildAlert getChildrenInfoFromAddress(String address) {
+		logger.debug(EActionsProceedConstants.CHILDALERT_SUCCESS.getValue(), address);
 		try {
 			ChildAlert childAlert = new ChildAlert();
 
 			List<PersonEntity> personEntityList = personRepository.findPersonEntityByAddressEntityEquals(address);
+			logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), personEntityList.size());
+
 			List<PersonInfo1> personInfo1List = new ArrayList<>();
 
 			for (PersonEntity person :
@@ -154,8 +157,10 @@ public class PersonGetService {
 	}
 
 	public PersonInfo getPersonsInfos(String firstName, String lastName) {
+		logger.debug(EActionsProceedConstants.FLOODSTATION_START.getValue(), firstName, lastName);
 
 		PersonEntity personEntity = personRepository.findPersonEntityByNameEntityLike(firstName,lastName);
+		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), 1);
 
 		Personinfos personinfos = new Personinfos();
 

@@ -35,6 +35,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getChildrenInfoFromAddress(address));
+			logger.info(EActionsProceedConstants.CHILDALERT_SUCCESS.getValue(), address);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
@@ -51,6 +52,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getPersonsInfos(firstName,lastName));
+			logger.info(EActionsProceedConstants.PERSONINFO_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}
