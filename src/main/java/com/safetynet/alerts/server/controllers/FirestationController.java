@@ -67,6 +67,7 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 
 		try {
 			response = ResponseEntity.ok(firestationGetServices.getPersonsInfosFromFirestationID(stationNumber));
+			logger.info(EActionsProceedConstants.FIRESTATIONINFOS_FROMID_SUCCESS.getValue(), stationNumber);
 		} catch (Exception e) {
 			logger.warn(e.getMessage(), e);
 		}

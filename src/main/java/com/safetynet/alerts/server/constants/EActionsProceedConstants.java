@@ -28,7 +28,9 @@ public enum EActionsProceedConstants {
 	DELETING_PERSON_START("Started process to delete Person named {} {} in the database."),
 	DELETING_PERSON_SUCCESS("Succeed to delete {} {} in the database."),
 	ADDING_MULTIPLE_PERSONS_START("Started process to add multiple Persons in the database."),
-	ADDING_MULTIPLE_PERSONS_SUCCESS("Succeed to add multiple Persons in the database.");
+	ADDING_MULTIPLE_PERSONS_SUCCESS("Succeed to add multiple Persons in the database."),
+	ADDING_MEDICALRECORD_START("Started process to add Medical Record for the following person : {} {}."),
+	ADDING_MEDICALRECORD_SUCCESS("Medical Record added in database for the following person : {} {}.");
 
 
 	private String value;

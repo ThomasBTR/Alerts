@@ -36,7 +36,7 @@ public class FirestationGetServices {
 		logger.debug(EActionsProceedConstants.FIRESTATIONINFOS_FROMID_START.getValue(), stationNumber);
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityStation(stationNumber);
-		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(), EObjectConstants.PERSON.getObject(), personEntities.size());
+		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON.getObject(), personEntities.size());
 		int adultCount = 0;
 		int childCount = 0;
 
@@ -65,7 +65,7 @@ public class FirestationGetServices {
 		logger.debug(EActionsProceedConstants.ADDING_FIRESTATION_START.getValue(), stationNumber, address);
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(address);
-		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
+		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
 
 		for (PersonEntity person :
 				personEntities) {
@@ -83,7 +83,7 @@ public class FirestationGetServices {
 		logger.debug(EActionsProceedConstants.UPDATING_FIRESTATION_START.getValue(), station, address);
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(address);
-		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
+		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
 
 		for (PersonEntity person :
 				personEntities) {
@@ -98,7 +98,7 @@ public class FirestationGetServices {
 		logger.debug(EActionsProceedConstants.DELETING_FIRESTATION_START.getValue(), station, address);
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntityByAddressEntityEquals(address);
-		logger.debug(EStatusConstants.DATA_RECEIVED.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
+		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(),EObjectConstants.PERSON.getObject(), personEntities.size());
 
 		for (PersonEntity person :
 				personEntities) {
