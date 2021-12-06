@@ -1,5 +1,6 @@
 package com.safetynet.alerts.server.services;
 
+import com.safetynet.alerts.server.constants.EActionsProceedConstants;
 import com.safetynet.alerts.server.database.entities.AllergeneEntity;
 import com.safetynet.alerts.server.database.entities.MedicationEntity;
 import com.safetynet.alerts.server.database.entities.MedicineEntity;
@@ -44,6 +45,7 @@ public class MedicationPostServices {
 	private static final Logger logger = LoggerFactory.getLogger(MedicationPostServices.class);
 
 	public PersonsRsp addMedications(Medicalrecords body) {
+		logger.debug(EActionsProceedConstants.ADDING_MULTIPLE_MEDICATIONS_START.getValue());
 		try {
 			PersonsRsp personRspList = new PersonsRsp();
 			for (MedicalRecord medicalrecord :

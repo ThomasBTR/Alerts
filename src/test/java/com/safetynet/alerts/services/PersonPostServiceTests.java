@@ -4,7 +4,7 @@ import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.PersonPostService;
 import io.swagger.model.PersonReq;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PersonPostServiceTests {
+class PersonPostServiceTests {
 
 	@Mock
 	PersonRepository personRepository;
@@ -40,7 +40,7 @@ public class PersonPostServiceTests {
 	String address = "1509 Culver St";
 
 
-	@BeforeAll
+	@BeforeEach
 	void prepare() {
 
 		personEntityListwithChild = new ArrayList<>();

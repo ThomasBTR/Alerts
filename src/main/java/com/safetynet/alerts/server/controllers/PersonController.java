@@ -35,8 +35,9 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getChildrenInfoFromAddress(address));
+			logger.info(EActionsProceedConstants.CHILDALERT_SUCCESS.getValue(),address);
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.PHONEALERT_ERROR.getValue(), e);
 		}
 
 		return response;
@@ -51,8 +52,9 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getPersonsInfos(firstName,lastName));
+			logger.info(EActionsProceedConstants.PERSONINFO_SUCCESS.getValue(),firstName,lastName);
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.PERSONINFO_ERROR.getValue(), e);
 		}
 
 		return response;
@@ -65,7 +67,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 		try {
 			response = ResponseEntity.ok(personGetService.getFloodStation(firestation));
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 		}
 
 		return response;
@@ -77,8 +79,9 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getFireBody(address));
+			logger.info(EActionsProceedConstants.FIREBODY_SUCCESS.getValue(),address);
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.FIREBODY_ERROR.getValue(), e);
 		}
 
 		return response;
@@ -90,8 +93,10 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getPhoneAlert(firestation));
+			logger.info(EActionsProceedConstants.PHONEALERT_SUCCESS.getValue(),firestation);
+
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.PHONEALERT_ERROR.getValue(), e);
 		}
 
 		return response;
@@ -119,7 +124,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 			personPostService.addPerson(body);
 			logger.info(EActionsProceedConstants.ADDING_PERSON_SUCCESS.getValue(), body.getFirstName(),body.getLastName());
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.ADDING_PERSON_ERROR.getValue(), e);
 		}
 
 		return PersonApi.super.addPerson(body);
@@ -135,7 +140,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 			personPostService.deletePerson(firstName,lastName);
 			logger.info(EActionsProceedConstants.DELETING_PERSON_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.DELETING_PERSON_ERROR.getValue(), e);
 		}
 		return PersonApi.super.deletePerson(firstName, lastName);
 	}
@@ -145,7 +150,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 			personPostService.updatePerson(body);
 			logger.info(EActionsProceedConstants.UPDATING_PERSON_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+		logger.error(EActionsProceedConstants.UPDATING_PERSON_ERROR.getValue(), e);
 		}
 
 		return PersonApi.super.updatePerson(firstName, lastName, body);
@@ -159,7 +164,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 			response = ResponseEntity.ok(personPostService.addPersons(body));
 			logger.info(EActionsProceedConstants.ADDING_MULTIPLE_PERSONS_SUCCESS.getValue());
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.ADDING_MULTIPLE_PERSONS_ERROR.getValue(), e);
 		}
 
 		return response;
@@ -171,8 +176,9 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getCityMailingList(city));
+			logger.info(EActionsProceedConstants.COMMUNITYEMAIL_SUCCESS.getValue(),city);
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.COMMUNITYEMAIL_ERROR.getValue(), e);
 		}
 
 		return response;

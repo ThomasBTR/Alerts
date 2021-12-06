@@ -134,32 +134,5 @@ class FirestationGetServiceTests {
 		}
 	}
 
-	@Test
-	void StationNumberAdd_Ok_ReturnStationNumberBody(){
-		// GIVEN
-		int station = 3;
 
-		when(firestationGetServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithChild);
-
-		// WHEN
-		firestationGetServices.addFirestationMappingToASpecifiedAddress(station, address);
-
-		// THEN
-		verify(firestationGetServices.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
-	}
-
-	@Test
-	void StationNumberUpdate_Ok_ReturnStationNumberBody(){
-		// GIVEN
-		int station = 3;
-
-		when(firestationGetServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithChild);
-
-		// WHEN
-		firestationGetServices.updateFirestationMappingToASpecifiedAddress(station, address);
-
-		// THEN
-		verify(firestationGetServices.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
-
-	}
 }

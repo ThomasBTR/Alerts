@@ -6,7 +6,7 @@ import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.FirestationPostServices;
 import io.swagger.model.AddressesRsp;
 import io.swagger.model.Firestations;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,8 +34,11 @@ class FirestationPostServiceTests {
 	FirestationPostServices firestationPostServices;
 
 
-	List<PersonEntity> personEntityList2;
-	List<PersonEntity> personEntityList1;
+	List<PersonEntity> personEntityListwithoutChild;
+	List<PersonEntity> personEntityListwithChild;
+
+	PersonEntity adult = null;
+	PersonEntity child = null;
 
 	String address = "1509 Culver St";
 
@@ -43,11 +46,11 @@ class FirestationPostServiceTests {
 
 
 
-	@BeforeAll
+	@BeforeEach
 	void prepare() {
 
-		personEntityList2 = new ArrayList<>();
-		personEntityList1 = new ArrayList<>();
+		personEntityListwithoutChild = new ArrayList<>();
+		personEntityListwithChild = new ArrayList<>();
 
 		firestationPostServices = new FirestationPostServices(personRepository);
 
@@ -110,9 +113,9 @@ class FirestationPostServiceTests {
 		child.setBirthdate(LocalDate.of(2012, 2, 18));
 		child.setNameEntity(childName);
 
-		personEntityList2.add(child);
-		personEntityList2.add(adult);
-		personEntityList1.add(adult);
+		personEntityListwithoutChild.add(child);
+		personEntityListwithoutChild.add(adult);
+		personEntityListwithChild.add(adult);
 
 		try {
 			firestations = UTHelper.stringToObject(UTHelper.readFileAsString("requestBody/Firestations/firestations_1value.json"),Firestations.class);
@@ -125,7 +128,7 @@ class FirestationPostServiceTests {
 	@Test
 	void AddressesRsp_OK_return1AddressWithStation() {
 		// GIVEN
-		when(firestationPostServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityList2);
+		when(firestationPostServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithoutChild);
 
 		// WHEN
 		AddressesRsp addressesRsp = firestationPostServices.addFirestations(firestations);
@@ -140,5 +143,33 @@ class FirestationPostServiceTests {
 		}
 	}
 
+	@Test
+	void StationNumberAdd_Ok_ReturnStationNumberBody(){
+		// GIVEN
+		int station = 3;
+
+		when(firestationPostServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithChild);
+
+		// WHEN
+		firestationPostServices.addFirestationMappingToASpecifiedAddress(station, address);
+
+		// THEN
+		verify(firestationPostServices.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
+	}
+
+	@Test
+	void StationNumberUpdate_Ok_ReturnStationNumberBody(){
+		// GIVEN
+		int station = 3;
+
+		when(firestationPostServices.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithChild);
+
+		// WHEN
+		firestationPostServices.updateFirestationMappingToASpecifiedAddress(station, address);
+
+		// THEN
+		verify(firestationPostServices.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
+
+	}
 
 }

@@ -1,6 +1,7 @@
 package com.safetynet.alerts.server.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.safetynet.alerts.server.constants.EActionsProceedConstants;
 import com.safetynet.alerts.server.services.FirestationGetServices;
 import com.safetynet.alerts.server.services.FirestationPostServices;
 import io.swagger.api.AddFirestationsApi;
@@ -53,8 +54,9 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 
 		try {
 			response = ResponseEntity.ok(firestationPostServices.addFirestations(body));
+			logger.info(EActionsProceedConstants.ADDING_MULTIPLE_FIRESTATIONS_SUCCESS.getValue());
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.ADDING_MULTIPLE_FIRESTATIONS_ERROR.getValue(), e);
 		}
 
 		return response;
@@ -67,7 +69,7 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 		try {
 			response = ResponseEntity.ok(firestationGetServices.getPersonsInfosFromFirestationID(stationNumber));
 		} catch (Exception e) {
-			logger.warn(e.getMessage(), e);
+			logger.error(EActionsProceedConstants.FIRESTATIONINFOS_FROMID_ERROR.getValue(), e);
 		}
 
 		return response;
@@ -75,18 +77,34 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 
 	@Override
 	public ResponseEntity<Void> addFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
-
-
+		try {
+			firestationPostServices.addFirestationMappingToASpecifiedAddress(stationNumber, address);
+			logger.info(EActionsProceedConstants.ADDING_FIRESTATION_SUCCESS.getValue(), stationNumber, address);
+		} catch (Exception e) {
+			logger.error(EActionsProceedConstants.ADDING_FIRESTATION_ERROR.getValue(), e);
+		}
 		return StationNumberApi.super.addFirestationMappingToSpecifiedAddress(address, stationNumber);
 	}
 
 	@Override
 	public ResponseEntity<Void> updateFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
+		try {
+			firestationPostServices.updateFirestationMappingToASpecifiedAddress(stationNumber, address);
+			logger.info(EActionsProceedConstants.UPDATING_FIRESTATION_SUCCESS.getValue(), stationNumber, address);
+		} catch (Exception e) {
+			logger.error(EActionsProceedConstants.UPDATING_FIRESTATION_ERROR.getValue(), e);
+		}
 		return StationNumberApi.super.updateFirestationMappingToSpecifiedAddress(address, stationNumber);
 	}
 
 	@Override
-	public ResponseEntity<Void> deleteFirestationMappingToSpecifiedAddress(String address, String stationNumber) {
+	public ResponseEntity<Void> deleteFirestationMappingToSpecifiedAddress(String address, Integer stationNumber) {
+		try {
+			firestationPostServices.deleteFirestationMappingToASpecifiedAddress(stationNumber, address);
+			logger.info(EActionsProceedConstants.DELETING_FIRESTATION_SUCCESS.getValue(), stationNumber, address);
+		} catch (Exception e) {
+			logger.error(EActionsProceedConstants.DELETING_FIRESTATION_ERROR.getValue(), e);
+		}
 		return StationNumberApi.super.deleteFirestationMappingToSpecifiedAddress(address, stationNumber);
 	}
 }
