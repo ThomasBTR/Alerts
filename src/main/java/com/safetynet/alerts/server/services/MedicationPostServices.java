@@ -1,6 +1,8 @@
 package com.safetynet.alerts.server.services;
 
 import com.safetynet.alerts.server.constants.EActionsProceedConstants;
+import com.safetynet.alerts.server.constants.EObjectConstants;
+import com.safetynet.alerts.server.constants.EStatusConstants;
 import com.safetynet.alerts.server.database.entities.AllergeneEntity;
 import com.safetynet.alerts.server.database.entities.MedicationEntity;
 import com.safetynet.alerts.server.database.entities.MedicineEntity;
@@ -44,13 +46,14 @@ public class MedicationPostServices {
 
 	private static final Logger logger = LoggerFactory.getLogger(MedicationPostServices.class);
 
-	public PersonsRsp addMedications(Medicalrecords body) {
-		logger.debug(EActionsProceedConstants.ADDING_MULTIPLE_MEDICATIONS_START.getValue());
+	public PersonsRsp addMedicalRecords(Medicalrecords body) {
+		logger.debug(EActionsProceedConstants.ADDING_MULTIPLE_MEDICAL_RECORDS_START.getValue());
 		try {
 			PersonsRsp personRspList = new PersonsRsp();
 			for (MedicalRecord medicalrecord :
 					body.getMedicalrecords()) {
 				PersonEntity person = personRepository.findPersonEntityByNameEntityLike(medicalrecord.getFirstName(), medicalrecord.getLastName());
+				logger.debug(EStatusConstants.DATA_RECEIVED_SOLO.getValue(), EObjectConstants.PERSON);
 				person.setBirthdate(getBirthDate(medicalrecord.getBirthdate()));
 
 				List<MedicationEntity> medicationEntities = getMedicationsEntities(medicalrecord,person);
@@ -110,5 +113,53 @@ public class MedicationPostServices {
 			medicationEntities.add(medicationEntity);
 		}
 		return medicationEntities;
+	}
+
+	public void addMedicalRecord(MedicalRecord medicalRecord){
+		logger.debug(EActionsProceedConstants.ADDING_MEDICAL_RECORD_START.getValue(), medicalRecord.getFirstName(), medicalRecord.getLastName());
+		PersonEntity person = personRepository.findPersonEntityByNameEntityLike(medicalRecord.getFirstName(), medicalRecord.getLastName());
+		logger.debug(EStatusConstants.DATA_RECEIVED_SOLO.getValue(), EObjectConstants.PERSON);
+		person.setBirthdate(getBirthDate(medicalRecord.getBirthdate()));
+
+		List<MedicationEntity> medicationEntities = getMedicationsEntities(medicalRecord,person);
+		medicationEntities = medicationRepository.saveAll(medicationEntities);
+		person.setMedications(medicationEntities);
+
+		List<AllergeneEntity> allergeneEntities = getAllergies(medicalRecord);
+		allergeneEntities = allergeneRepository.saveAll(allergeneEntities);
+		person.setAllergies(allergeneEntities);
+		personRepository.save(person);
+	}
+
+	public void updateMedicalRecord(String firstName, String lastName, MedicalRecord medicalRecord){
+		logger.debug(EActionsProceedConstants.UPDATING_MEDICAL_RECORD_START.getValue(), medicalRecord.getFirstName(), medicalRecord.getLastName());
+		PersonEntity person = personRepository.findPersonEntityByNameEntityLike(firstName, lastName);
+		logger.debug(EStatusConstants.DATA_RECEIVED_SOLO.getValue(), EObjectConstants.PERSON);
+		person.setBirthdate(getBirthDate(medicalRecord.getBirthdate()));
+
+		List<MedicationEntity> medicationEntities = getMedicationsEntities(medicalRecord,person);
+		medicationEntities = medicationRepository.saveAll(medicationEntities);
+		person.setMedications(medicationEntities);
+
+		List<AllergeneEntity> allergeneEntities = getAllergies(medicalRecord);
+		allergeneEntities = allergeneRepository.saveAll(allergeneEntities);
+		person.setAllergies(allergeneEntities);
+		personRepository.save(person);
+	}
+
+	public void deleteMedicalRecord(String firstName, String lastName) {
+		logger.debug(EActionsProceedConstants.DELETING_MEDICAL_RECORD_START.getValue(), firstName, lastName);
+		PersonEntity person = personRepository.findPersonEntityByNameEntityLike(firstName, lastName);
+		logger.debug(EStatusConstants.DATA_RECEIVED_SOLO.getValue(), EObjectConstants.PERSON);
+		person.setBirthdate(LocalDate.now());
+
+		List<MedicationEntity> medicationEntities = new ArrayList<>();
+		medicationEntities = medicationRepository.saveAll(medicationEntities);
+		person.setMedications(medicationEntities);
+
+		List<AllergeneEntity> allergeneEntities = new ArrayList<>();
+		allergeneEntities = allergeneRepository.saveAll(allergeneEntities);
+		person.setAllergies(allergeneEntities);
+		personRepository.save(person);
 	}
 }
