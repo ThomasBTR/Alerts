@@ -5,7 +5,7 @@ import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.AllergeneRepository;
 import com.safetynet.alerts.server.database.repositories.MedicationRepository;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
-import com.safetynet.alerts.server.services.MedicationServices;
+import com.safetynet.alerts.server.services.MedicationPostServices;
 import io.swagger.model.Medicalrecords;
 import io.swagger.model.PersonsRsp;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,7 +39,7 @@ class MedicationServicesTests {
 	@Mock
 	MedicationRepository medicationRepository;
 
-	MedicationServices medicationServices;
+	MedicationPostServices medicationServices;
 
 	PersonEntity adult = new PersonEntity();
 
@@ -51,14 +51,13 @@ class MedicationServicesTests {
 	Medicalrecords medicalrecords;
 
 
-
 	@BeforeAll
 	void prepare() {
 
 		personEntityList2 = new ArrayList<>();
 		personEntityList1 = new ArrayList<>();
 
-		medicationServices = new MedicationServices(personRepository, medicationRepository, allergeneRepository);
+		medicationServices = new MedicationPostServices(personRepository, medicationRepository, allergeneRepository);
 
 		MedicationEntity medicationEntity = new MedicationEntity();
 
@@ -119,7 +118,7 @@ class MedicationServicesTests {
 		personEntityList1.add(adult);
 
 		try {
-			medicalrecords = UTHelper.stringToObject(UTHelper.readFileAsString("requestBody/MedicalRecords/medicalrecords.json"),Medicalrecords.class);
+			medicalrecords = UTHelper.stringToObject(UTHelper.readFileAsString("requestBody/MedicalRecords/medicalrecords.json"), Medicalrecords.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -131,15 +130,15 @@ class MedicationServicesTests {
 		// GIVEN
 		String firstName = "John";
 		String lastName = "Boyd";
-		when(medicationServices.personRepository.findPersonEntityByNameEntityLike(firstName,lastName)).thenReturn(adult);
+		when(medicationServices.personRepository.findPersonEntityByNameEntityLike(firstName, lastName)).thenReturn(adult);
 		when(medicationServices.medicationRepository.saveAll(any(ArrayList.class))).thenReturn(null);
 		when(medicationServices.allergeneRepository.saveAll(any(ArrayList.class))).thenReturn(null);
 
 		// WHEN
-		PersonsRsp personsRsp = medicationServices.addMedications(medicalrecords);
+		PersonsRsp personsRsp = medicationServices.addMedicalRecords(medicalrecords);
 
 		// THEN
-		verify(medicationServices.personRepository, times(1)).findPersonEntityByNameEntityLike(firstName,lastName);
+		verify(medicationServices.personRepository, times(1)).findPersonEntityByNameEntityLike(firstName, lastName);
 		assertThat(personsRsp).isInstanceOf(PersonsRsp.class);
 		try {
 			assertThat(personsRsp).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/Addresses.json"), PersonsRsp.class));

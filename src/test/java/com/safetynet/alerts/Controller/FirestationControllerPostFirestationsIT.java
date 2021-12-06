@@ -4,10 +4,7 @@ package com.safetynet.alerts.Controller;
 import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.controllers.FirestationController;
 import com.safetynet.alerts.server.services.FirestationGetServices;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,6 +35,7 @@ class FirestationControllerPostFirestationsIT {
 		Assertions.assertNotNull(mvc);
 	}
 
+	@Disabled
 	@Test
 	void test_200_insert1Firestation() throws Exception {
 		mvc.perform(post("/firestations")

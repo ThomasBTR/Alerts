@@ -46,6 +46,7 @@ class PersonControllerGetPersonsSIT {
 		Assertions.assertNotNull(mvc);
 	}
 
+	@Disabled
 	@Test
 	@DisplayName("Should response 200 with when an address is given and return a ChildAlert JSON response")
 	void getChildAlert_200_station3() throws Exception {

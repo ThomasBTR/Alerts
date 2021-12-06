@@ -36,6 +36,7 @@ class PersonControllerPostPersonsSIT {
 		Assertions.assertNotNull(mvc);
 	}
 
+	@Disabled
 	@Test
 	@DisplayName("Should response 200 with person added to the database as json response")
 	void test_200_insert1Firestation() throws Exception {
