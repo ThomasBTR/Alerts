@@ -48,7 +48,7 @@ public class PersonGetService {
 					Child child = new Child();
 					child.setFirstName(person.getNameEntity().getFirstName());
 					child.setLastName(person.getNameEntity().getLastName());
-					child.setAge(getAge(person.getBirthdate()));
+					child.setAge(String.valueOf(person.getBirthdate()));
 					childAlert.addChildItem(child);
 				} else {
 					PersonInfo1 personInfo1 = new PersonInfo1();
@@ -72,11 +72,11 @@ public class PersonGetService {
 		}
 	}
 
-	public String getAge(LocalDate birthDate) {
+	public int getAge(LocalDate birthDate) {
 		if (birthDate != null) {
-			return String.valueOf(Period.between(birthDate, LocalDate.now()).getYears());
+			return Period.between(birthDate, LocalDate.now()).getYears();
 		} else {
-			return null;
+			return 0;
 		}
 	}
 
@@ -145,14 +145,13 @@ public class PersonGetService {
 
 			for (PersonEntity person :
 					personEntityList) {
-				if (person.getAddressEntity().getAddress().equals(floodStation1.getAddress())) {
+				if (!person.getAddressEntity().getAddress().equals(floodStation1.getAddress())) {
 					floodStation1 = new FloodStation1();
 					floodStation1.setAddress(person.getAddressEntity().getAddress());
 					floodStation1.setCity(person.getAddressEntity().getCity());
 					floodStation1.setZip(person.getAddressEntity().getZip());
 				}
-
-				floodStation1.setPersonsInfo(createFloodstationPerson(person));
+				floodStation1.addPersonsInfoItem(createFloodstationPerson(person));
 				floodStation.addAddressesItem(floodStation1);
 			}
 		}
@@ -183,22 +182,19 @@ public class PersonGetService {
 	}
 
 
-	private FloodStation1PersonsInfo createFloodstationPerson(PersonEntity person) {
-		FloodStation1PersonsInfo floodStation1PersonsInfo = new FloodStation1PersonsInfo();
-
+	private FloodstationPersonsInfo createFloodstationPerson(PersonEntity person) {
 		FloodstationPersonsInfo personsInfo = new FloodstationPersonsInfo();
 		personsInfo.setFirstName(person.getNameEntity().getFirstName());
 		personsInfo.setLastName(person.getNameEntity().getLastName());
 		personsInfo.setPhone(person.getPhone());
 		personsInfo.setAllergies(getAllergiesInfo(person.getAllergies()));
 		personsInfo.setMedications(getpersonsInfoMedications(person.getMedications()));
-		floodStation1PersonsInfo.setPersons(personsInfo);
 
-		return floodStation1PersonsInfo;
+		return personsInfo;
 	}
 
-	private PersoninfosMedications getpersonsInfoMedications(List<MedicationEntity> medications) {
-		PersoninfosMedications personsInfoMedications = new PersoninfosMedications();
+	private List<Medications> getpersonsInfoMedications(List<MedicationEntity> medications) {
+		List<Medications> personsInfoMedications = new ArrayList<>();
 		for (MedicationEntity medicationEntity :
 				medications) {
 			Medications medicationsInfos = new Medications();
@@ -210,19 +206,19 @@ public class PersonGetService {
 			medicationsMedicineEntity.setMedicineName(medicationEntity.getMedicineEntity().getMedecineName());
 
 			medicationsInfos.setMedicineEntity(medicationsMedicineEntity);
-			personsInfoMedications.setMedications(medicationsInfos);
+			personsInfoMedications.add(medicationsInfos);
 		}
 		return personsInfoMedications;
 	}
 
-	private PersoninfosAllergies getAllergiesInfo(List<AllergeneEntity> allergies) {
-		PersoninfosAllergies personsInfoAllergies = new PersoninfosAllergies();
+	private List<Allergies> getAllergiesInfo(List<AllergeneEntity> allergies) {
+		List<Allergies> personsInfoAllergies = new ArrayList<>();
 		for (AllergeneEntity allergeneEntity :
 				allergies) {
 			Allergies allergiesinfo = new Allergies();
 			allergiesinfo.setAllergene(allergeneEntity.getAllergene());
 			allergiesinfo.setId(allergeneEntity.getId());
-			personsInfoAllergies.setAllegies(allergiesinfo);
+			personsInfoAllergies.add(allergiesinfo);
 		}
 
 		return personsInfoAllergies;

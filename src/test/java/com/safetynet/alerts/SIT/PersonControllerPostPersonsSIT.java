@@ -1,4 +1,4 @@
-package com.safetynet.alerts.Controller;
+package com.safetynet.alerts.SIT;
 
 
 import com.google.inject.Inject;

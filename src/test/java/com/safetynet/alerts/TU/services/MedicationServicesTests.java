@@ -1,4 +1,4 @@
-package com.safetynet.alerts.services;
+package com.safetynet.alerts.TU.services;
 
 import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.database.entities.*;

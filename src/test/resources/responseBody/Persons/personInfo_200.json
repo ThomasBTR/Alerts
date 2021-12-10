@@ -1,32 +1,32 @@
 {
-  "address": [
+  "personsinfos": [
     {
-      "persons": [
+      "firstName": "John",
+      "lastName": "Boyd",
+      "email": "jaboyd@email.com",
+      "age": "37",
+      "medications": [
         {
-          "firstName": "John",
-          "lastName": "Boyd",
-          "allergies": {
-            "id": "1",
-            "allegene": "nillacilan"
+          "id": 1,
+          "medicineEntity": {
+            "id": 1,
+            "medicineName": "aznol"
           },
-          "medications": [
-            {
-              "id": "1",
-              "medicineEntity": {
-                "id": "1",
-                "medicineName": "aznol"
-              },
-              "dosage": "350"
-            },
-            {
-              "id": "2",
-              "medicineEntity": {
-                "id": "2",
-                "medicineName": "hydrapermazol"
-              },
-              "dosage": "100"
-            }
-          ]
+          "dosage": 350
+        },
+        {
+          "id": 2,
+          "medicineEntity": {
+            "id": 2,
+            "medicineName": "hydrapermazol"
+          },
+          "dosage": 100
+        }
+      ],
+      "allergies": [
+        {
+          "id": 1,
+          "allergene": "nillacilan"
         }
       ]
     }

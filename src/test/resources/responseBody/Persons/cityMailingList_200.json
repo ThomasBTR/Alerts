@@ -1,6 +1,7 @@
 {
-  "Emails": [
-     "jaboyd@email.com",
-      "tenz@email.com"
+  "emails": [
+    "tenz@email.com",
+    "jaboyd@email.com"
+
   ]
 }

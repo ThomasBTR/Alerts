@@ -17,12 +17,10 @@
       "type": "string"
     },
     "personsInfo": {
-      "type": "object",
+      "type": "array",
       "description": "An array of persons living at this address",
-      "properties": {
-        "persons": {
+      "items": {
           "$ref": "floodstation_personsInfo.schema.json"
-        }
       }
     }
   }

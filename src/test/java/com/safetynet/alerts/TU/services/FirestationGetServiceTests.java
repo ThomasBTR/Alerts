@@ -1,10 +1,11 @@
-package com.safetynet.alerts.services;
+package com.safetynet.alerts.TU.services;
 
+import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
-import com.safetynet.alerts.server.services.PersonPostService;
-import io.swagger.model.PersonReq;
-import org.junit.jupiter.api.BeforeEach;
+import com.safetynet.alerts.server.services.FirestationGetServices;
+import io.swagger.model.Firestation;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,21 +13,24 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PersonPostServiceTests {
+class FirestationGetServiceTests {
 
 	@Mock
 	PersonRepository personRepository;
 
-	PersonPostService personPostService;
+	FirestationGetServices firestationGetServices;
 
 	PersonEntity adult = null;
 	PersonEntity child = null;
@@ -35,18 +39,16 @@ class PersonPostServiceTests {
 	List<PersonEntity> personEntityListwithChild;
 	List<PersonEntity> personEntityListwithoutChild;
 
-	PersonReq personReq = null;
-
 	String address = "1509 Culver St";
 
 
-	@BeforeEach
+	@BeforeAll
 	void prepare() {
 
 		personEntityListwithChild = new ArrayList<>();
 		personEntityListwithoutChild = new ArrayList<>();
 
-		personPostService = new PersonPostService(personRepository);
+		firestationGetServices = new FirestationGetServices(personRepository);
 
 		MedicationEntity medicationEntity = new MedicationEntity();
 
@@ -109,55 +111,28 @@ class PersonPostServiceTests {
 		personEntityListwithChild.add(child);
 		personEntityListwithChild.add(adult);
 		personEntityListwithoutChild.add(adult);
-
-		personReq = new PersonReq();
-		personReq.setEmail(adult.getEmail());
-		personReq.setPhone(adult.getPhone());
-		personReq.setAddress(adult.getAddressEntity().getAddress());
-		personReq.setCity(adult.getAddressEntity().getCity());
-		personReq.setZip(adult.getAddressEntity().getZip());
-		personReq.setFirstName(adult.getNameEntity().getFirstName());
-		personReq.setLastName(adult.getNameEntity().getLastName());
-
 	}
 
 
 	@Test
-	void personPost_200_ReturnOKBody(){
-
+	void StationNumber_Ok_ReturnFirestationBody(){
 		// GIVEN
-		when(personPostService.personRepository.save(any(PersonEntity.class))).thenReturn(adult);
+		int station = 3;
+
+		when(firestationGetServices.personRepository.findPersonEntitiesByAddressEntityStation(station)).thenReturn(personEntityListwithChild);
 
 		// WHEN
-		personPostService.addPerson(personReq);
+		Firestation firestation = firestationGetServices.getPersonsInfosFromFirestationID(station);
 
 		// THEN
-		verify(personPostService.personRepository, times(1)).save(any(PersonEntity.class));
+		verify(firestationGetServices.personRepository, times(1)).findPersonEntitiesByAddressEntityStation(station);
+		assertThat(firestation).isInstanceOf(Firestation.class);
+		try {
+			assertThat(firestation).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/floodstation_200.json"), Firestation.class));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Test
-	void personPut_200_ReturnOKBody(){
-		// GIVEN
-		when(personPostService.personRepository.save(any(PersonEntity.class))).thenReturn(adult);
-
-		// WHEN
-		personPostService.updatePerson(personReq);
-
-		// THEN
-		verify(personPostService.personRepository, times(1)).save(any(PersonEntity.class));
-	}
-
-
-	@Test
-	void personDelete_200_ReturnVoid(){
-		// GIVEN
-		String firstName = adult.getNameEntity().getFirstName();
-		String lastName = adult.getNameEntity().getLastName();
-		// WHEN
-		personPostService.deletePerson(firstName, lastName);
-
-		// THEN
-		verify(personPostService.personRepository, times(1)).delete(personRepository.findPersonEntityByNameEntityLike(firstName,lastName));
-	}
 
 }

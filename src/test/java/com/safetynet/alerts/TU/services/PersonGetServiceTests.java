@@ -1,11 +1,11 @@
-package com.safetynet.alerts.services;
+package com.safetynet.alerts.TU.services;
 
 import com.safetynet.alerts.UTHelper;
 import com.safetynet.alerts.server.database.entities.*;
 import com.safetynet.alerts.server.database.repositories.PersonRepository;
 import com.safetynet.alerts.server.services.PersonGetService;
 import io.swagger.model.*;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,7 +42,7 @@ class PersonGetServiceTests {
 	String address = "1509 Culver St";
 
 
-	@BeforeAll
+	@BeforeEach
 	void prepare() {
 
 		personEntityListwithChild = new ArrayList<>();
@@ -50,13 +50,15 @@ class PersonGetServiceTests {
 
 		personGetService = new PersonGetService(personRepository);
 
-		MedicationEntity medicationEntity = new MedicationEntity();
+		MedicationEntity medicationEntity1 = new MedicationEntity();
+		MedicationEntity medicationEntity2 = new MedicationEntity();
 
 		AddressEntity addressEntity = new AddressEntity();
 
 		List<MedicationEntity> medicationEntities = new ArrayList<>();
 
-		MedicineEntity medicineEntity = new MedicineEntity();
+		MedicineEntity medicineEntity1 = new MedicineEntity();
+		MedicineEntity medicineEntity2 = new MedicineEntity();
 
 		List<AllergeneEntity> allergeneEntities = new ArrayList<>();
 
@@ -70,15 +72,24 @@ class PersonGetServiceTests {
 		addressEntity.setCity("Culver");
 		addressEntity.setZip("97451");
 
-		medicineEntity.setMedecineName("aznol");
-		medicineEntity.setId(0);
+		medicineEntity1.setMedecineName("aznol");
+		medicineEntity1.setId(1);
 
-		medicationEntity.setDosage(350);
-		medicationEntity.setMedicineEntity(medicineEntity);
-		medicationEntity.setId(0);
+		medicationEntity1.setDosage(350);
+		medicationEntity1.setMedicineEntity(medicineEntity1);
+		medicationEntity1.setId(1);
+		medicationEntities.add(medicationEntity1);
+
+		medicineEntity2.setMedecineName("hydrapermazol");
+		medicineEntity2.setId(2);
+
+		medicationEntity2.setDosage(100);
+		medicationEntity2.setMedicineEntity(medicineEntity2);
+		medicationEntity2.setId(2);
+		medicationEntities.add(medicationEntity2);
 
 		allergeneEntity.setAllergene("nillacilan");
-		allergeneEntity.setId(0);
+		allergeneEntity.setId(1);
 		allergeneEntities.add(allergeneEntity);
 
 		NameEntity adultName = new NameEntity();
@@ -122,7 +133,7 @@ class PersonGetServiceTests {
 		ChildAlert childAlert = personGetService.getChildrenInfoFromAddress(address);
 
 		// THEN
-		verify(personGetService.personRepository, times(2)).findPersonEntityByAddressEntityEquals(address);
+		verify(personGetService.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
 		assertThat(childAlert).isInstanceOf(ChildAlert.class);
 		try {
 			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/childAlertWithChild.json"), ChildAlert.class));
@@ -132,7 +143,7 @@ class PersonGetServiceTests {
 	}
 
 	@Test
-	void childAlert_OK_returnChildAlertWhitoutChild() {
+	void childAlert_OK_returnChildAlertWithoutChild() {
 		// GIVEN
 		when(personGetService.personRepository.findPersonEntityByAddressEntityEquals(address)).thenReturn(personEntityListwithoutChild);
 
@@ -198,7 +209,7 @@ class PersonGetServiceTests {
 		FloodStation floodStation = personGetService.getFloodStation(firestationList);
 
 		// THEN
-		verify(personGetService.personRepository, times(2)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
+		verify(personGetService.personRepository, times(1)).findPersonEntitiesByAddressEntityContainingSpecificStation(station);
 		assertThat(floodStation).isInstanceOf(FloodStation.class);
 		try {
 			assertThat(floodStation).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/Persons/floodstation_200.json"), FloodStation.class));

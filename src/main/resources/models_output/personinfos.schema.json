@@ -18,22 +18,18 @@
       "type": "string"
     },
     "age": {
-      "type": "string"
+      "type": "integer"
     },
     "medications": {
-      "type": "object",
-      "properties": {
-        "medications": {
+      "type": "array",
+      "items": {
           "$ref": "medications.schema.json"
-        }
       }
     },
     "allergies": {
-      "type": "object",
-      "properties": {
-        "allegies": {
+      "type": "array",
+      "items": {
           "$ref": "allergies.schema.json"
-        }
       }
     }
   }

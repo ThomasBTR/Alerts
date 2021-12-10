@@ -20,12 +20,16 @@ import java.util.Optional;
 public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAlertApi, FireApi, FloodStationApi, PersonInfoApi, CommunityEmailApi, PersonApi {
 
 	@Autowired
-	protected HttpServletRequest request;
-
-	@Autowired
 	PersonPostService personPostService;
 
+	@Autowired
 	PersonGetService personGetService;
+
+	public PersonController(PersonGetService personGetService, PersonPostService personPostService){
+		this.personGetService = personGetService;
+		this.personPostService = personPostService;
+	}
+
 
 	private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
 

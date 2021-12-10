@@ -1,55 +1,62 @@
 {
-  "address": [
+  "addresses": [
     {
       "address": "1509 Culver St",
       "city": "Culver",
       "zip": "97451",
-      "persons": [{
-        "firstName": "John",
-        "lastName": "Boyd",
-        "allergies": {
-          "id": "1",
-          "allegene": "nillacilan"
-        },
-        "medications": [
-          {
-            "id": "1",
-            "medicineEntity": {
-              "id": "1",
-              "medicineName": "aznol"
-            },
-            "dosage": "350"
-          },
-          {
-            "id": "2",
-            "medicineEntity": {
-              "id": "2",
-              "medicineName": "hydrapermazol"
-            },
-            "dosage": "100"
-          }
-        ]
-      },
+      "personsInfo": [
         {
-          "firstName": "Tenley",
+          "firstName": "John",
           "lastName": "Boyd",
-          "allergies": {
-            "id": "1",
-            "allegene": "nillacilan"
-          },
+          "phone": "841-874-6512",
+          "allergies": [
+            {
+              "id": 1,
+              "allergene": "nillacilan"
+            }
+          ],
           "medications": [
             {
-              "id": "1",
+              "id": 2,
               "medicineEntity": {
-                "id": "1",
+                "id": 1,
                 "medicineName": "aznol"
               },
               "dosage": "350"
             },
             {
-              "id": "2",
+              "id": 2,
               "medicineEntity": {
-                "id": "2",
+                "id": 2,
+                "medicineName": "hydrapermazol"
+              },
+              "dosage": "100"
+            }
+          ]
+        },
+        {
+          "firstName": "Tenley",
+          "lastName": "Boyd",
+          "phone": "841-874-6512",
+          "allergies": [
+            {
+              "id": 1,
+              "allergene": "nillacilan"
+            }
+          ],
+          "medications": [
+            {
+              "id": 1,
+              "medicineEntity": {
+                "id": 1,
+                "medicineName": "aznol"
+              },
+              "dosage": "350"
+            },
+            {
+              "id": 2,
+              "medicineEntity": {
+                "id": 2,
                 "medicineName": "hydrapermazol"
               },
               "dosage": "100"

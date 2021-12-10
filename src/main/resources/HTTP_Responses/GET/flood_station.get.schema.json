@@ -2,7 +2,7 @@
   "$id": "flood_station.get.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "required": [
-    "address"
+    "addresses"
   ],
   "type": "object",
   "properties": {
