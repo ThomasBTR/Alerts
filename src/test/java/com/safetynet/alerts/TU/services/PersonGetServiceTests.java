@@ -119,8 +119,8 @@ class PersonGetServiceTests {
 		child.setNameEntity(childName);
 		child.setEmail("tenz@email.com");
 
-		personEntityListwithChild.add(child);
 		personEntityListwithChild.add(adult);
+		personEntityListwithChild.add(child);
 		personEntityListwithoutChild.add(adult);
 	}
 
@@ -151,7 +151,7 @@ class PersonGetServiceTests {
 		ChildAlert childAlert = personGetService.getChildrenInfoFromAddress(address);
 
 		// THEN
-		verify(personGetService.personRepository, times(3)).findPersonEntityByAddressEntityEquals(address);
+		verify(personGetService.personRepository, times(1)).findPersonEntityByAddressEntityEquals(address);
 		assertThat(childAlert).isInstanceOf(ChildAlert.class);
 		try {
 			assertThat(childAlert).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString("responseBody/ChildAlert/childAlertEmpty.json"), ChildAlert.class));

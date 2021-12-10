@@ -34,12 +34,12 @@ public class PersonGetService {
 	}
 
 	public ChildAlert getChildrenInfoFromAddress(String address) {
-		logger.debug(EActionsProceedConstants.CHILDALERT_START.getValue(),address);
+		logger.debug(EActionsProceedConstants.CHILDALERT_START.getValue(), address);
 		try {
 			ChildAlert childAlert = new ChildAlert();
 
 			List<PersonEntity> personEntityList = personRepository.findPersonEntityByAddressEntityEquals(address);
-			logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON,personEntityList.size());
+			logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON, personEntityList.size());
 			List<PersonInfo1> personInfo1List = new ArrayList<>();
 
 			for (PersonEntity person :
@@ -48,7 +48,7 @@ public class PersonGetService {
 					Child child = new Child();
 					child.setFirstName(person.getNameEntity().getFirstName());
 					child.setLastName(person.getNameEntity().getLastName());
-					child.setAge(String.valueOf(person.getBirthdate()));
+					child.setAge(String.valueOf(getAge(person.getBirthdate())));
 					childAlert.addChildItem(child);
 				} else {
 					PersonInfo1 personInfo1 = new PersonInfo1();
@@ -81,12 +81,12 @@ public class PersonGetService {
 	}
 
 	public PhoneAlert getPhoneAlert(int station) {
-		logger.debug(EActionsProceedConstants.PHONEALERT_START.getValue(),station);
+		logger.debug(EActionsProceedConstants.PHONEALERT_START.getValue(), station);
 
 		PhoneAlert phoneAlert = new PhoneAlert();
 
 		List<PersonEntity> personEntityList = personRepository.findPersonEntitiesByAddressEntityContainingSpecificStation(station);
-		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON,personEntityList.size());
+		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON, personEntityList.size());
 
 
 		for (PersonEntity person :
@@ -98,12 +98,12 @@ public class PersonGetService {
 	}
 
 	public Fire getFireBody(String address) {
-		logger.debug(EActionsProceedConstants.FIREBODY_START.getValue(),address);
+		logger.debug(EActionsProceedConstants.FIREBODY_START.getValue(), address);
 
 		Fire fire = new Fire();
 
 		List<PersonEntity> personEntityList = personRepository.findPersonEntityByAddressEntityEquals(address);
-		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON,personEntityList.size());
+		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON, personEntityList.size());
 
 
 		Integer adultCount = 0;
@@ -136,24 +136,30 @@ public class PersonGetService {
 		for (Integer station :
 				firestationList) {
 			List<PersonEntity> personEntityList = personRepository.findPersonEntitiesByAddressEntityContainingSpecificStation(station);
-			logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON,personEntityList.size());
+			logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON, personEntityList.size());
 
 
 			personEntityList.sort(PersonEntity.Comparators.ADDRESS);
 
-			FloodStation1 floodStation1 = new FloodStation1();
-
+			FloodStation1 floodStation1 = null;
+			String address = null;
 			for (PersonEntity person :
 					personEntityList) {
-				if (!person.getAddressEntity().getAddress().equals(floodStation1.getAddress())) {
+				if (!person.getAddressEntity().getAddress().equals(address)) {
+					if(null != floodStation1){
+						floodStation.addAddressesItem(floodStation1);
+					}
 					floodStation1 = new FloodStation1();
+					address = person.getAddressEntity().getAddress();
 					floodStation1.setAddress(person.getAddressEntity().getAddress());
 					floodStation1.setCity(person.getAddressEntity().getCity());
 					floodStation1.setZip(person.getAddressEntity().getZip());
+					floodStation1.addPersonsInfoItem(createFloodstationPerson(person));
+				} else {
+					floodStation1.addPersonsInfoItem(createFloodstationPerson(person));
 				}
-				floodStation1.addPersonsInfoItem(createFloodstationPerson(person));
-				floodStation.addAddressesItem(floodStation1);
 			}
+			floodStation.addAddressesItem(floodStation1);
 		}
 
 
@@ -161,8 +167,8 @@ public class PersonGetService {
 	}
 
 	public PersonInfo getPersonsInfos(String firstName, String lastName) {
-		logger.debug(EActionsProceedConstants.PERSONINFO_START.getValue(),firstName,lastName);
-		PersonEntity personEntity = personRepository.findPersonEntityByNameEntityLike(firstName,lastName);
+		logger.debug(EActionsProceedConstants.PERSONINFO_START.getValue(), firstName, lastName);
+		PersonEntity personEntity = personRepository.findPersonEntityByNameEntityLike(firstName, lastName);
 		logger.debug(EStatusConstants.DATA_RECEIVED_SOLO.getValue(), EObjectConstants.PERSON);
 
 
@@ -230,11 +236,11 @@ public class PersonGetService {
 		CityMailingList cityMailingList = new CityMailingList();
 
 		List<PersonEntity> personEntities = personRepository.findPersonEntitiesByAddressEntityContainingCity(city);
-		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON,personEntities.size());
+		logger.debug(EStatusConstants.DATA_RECEIVED_LIST.getValue(), EObjectConstants.PERSON, personEntities.size());
 
 
-		for (PersonEntity person:
-			personEntities) {
+		for (PersonEntity person :
+				personEntities) {
 			cityMailingList.addEmailsItem(person.getEmail());
 		}
 

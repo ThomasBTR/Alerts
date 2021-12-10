@@ -18,6 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled
 @SpringBootTest
 @TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(controllers = {FirestationController.class, FirestationGetServices.class})
@@ -35,7 +36,6 @@ class FirestationControllerPostFirestationsIT {
 		Assertions.assertNotNull(mvc);
 	}
 
-	@Disabled
 	@Test
 	void test_200_insert1Firestation() throws Exception {
 		mvc.perform(post("/firestations")

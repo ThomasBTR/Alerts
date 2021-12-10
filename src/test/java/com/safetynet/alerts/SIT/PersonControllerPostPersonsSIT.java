@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled
 @WebMvcTest(controllers = {PersonController.class, PersonPostService.class})
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,7 +37,7 @@ class PersonControllerPostPersonsSIT {
 		Assertions.assertNotNull(mvc);
 	}
 
-	@Disabled
+
 	@Test
 	@DisplayName("Should response 200 with person added to the database as json response")
 	void test_200_insert1Firestation() throws Exception {

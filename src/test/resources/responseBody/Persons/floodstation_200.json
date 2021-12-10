@@ -17,7 +17,7 @@
           ],
           "medications": [
             {
-              "id": 2,
+              "id": 1,
               "medicineEntity": {
                 "id": 1,
                 "medicineName": "aznol"
