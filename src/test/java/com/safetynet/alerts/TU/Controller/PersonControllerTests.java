@@ -204,5 +204,32 @@ class PersonControllerTests {
 		}
 	}
 
+	@Test
+	void Email_OK_ReturnEmails_Body() {
+		// GIVEN
+		String filepath = "responseBody/Persons/cityMailingList_200.json";
+		String city = "Culver";
+		CityMailingList cityMailingList = new CityMailingList();
+		try {
+			cityMailingList = UTHelper.stringToObject(UTHelper.readFileAsString(filepath), CityMailingList.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		when(personGetService.getCityMailingList(city)).thenReturn(cityMailingList);
+
+		// WHEN
+		ResponseEntity<CityMailingList> response = personController.getMailingListFromCity(city);
+
+		// THEN
+		verify(personGetService, times(1)).getCityMailingList(city);
+		assertThat(response).isInstanceOf(ResponseEntity.class);
+		assertThat(response.getBody()).isInstanceOf(PersonInfo.class);
+		try {
+			assertThat(response.getBody()).isEqualTo(UTHelper.stringToObject(UTHelper.readFileAsString(filepath), PersonInfo.class));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
