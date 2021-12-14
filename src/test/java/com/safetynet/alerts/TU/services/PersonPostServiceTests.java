@@ -42,7 +42,6 @@ class PersonPostServiceTests {
 
 	@BeforeEach
 	void prepare() {
-
 		personEntityListwithChild = new ArrayList<>();
 		personEntityListwithoutChild = new ArrayList<>();
 

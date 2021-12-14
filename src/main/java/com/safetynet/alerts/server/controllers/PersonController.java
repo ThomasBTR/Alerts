@@ -9,6 +9,7 @@ import io.swagger.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 	@Autowired
 	PersonGetService personGetService;
 
-	public PersonController(PersonGetService personGetService, PersonPostService personPostService){
+	public PersonController(PersonGetService personGetService, PersonPostService personPostService) {
 		this.personGetService = personGetService;
 		this.personPostService = personPostService;
 	}
@@ -39,7 +40,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getChildrenInfoFromAddress(address));
-			logger.info(EActionsProceedConstants.CHILDALERT_SUCCESS.getValue(),address);
+			logger.info(EActionsProceedConstants.CHILDALERT_SUCCESS.getValue(), address);
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.PHONEALERT_ERROR.getValue(), e);
 		}
@@ -48,15 +49,13 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 	}
 
 
-
-
 	@Override
 	public ResponseEntity<PersonInfo> getPersonInfos(String firstName, String lastName) {
 		ResponseEntity<PersonInfo> response = null;
 
 		try {
-			response = ResponseEntity.ok(personGetService.getPersonsInfos(firstName,lastName));
-			logger.info(EActionsProceedConstants.PERSONINFO_SUCCESS.getValue(),firstName,lastName);
+			response = ResponseEntity.ok(personGetService.getPersonsInfos(firstName, lastName));
+			logger.info(EActionsProceedConstants.PERSONINFO_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.PERSONINFO_ERROR.getValue(), e);
 		}
@@ -83,7 +82,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getFireBody(address));
-			logger.info(EActionsProceedConstants.FIREBODY_SUCCESS.getValue(),address);
+			logger.info(EActionsProceedConstants.FIREBODY_SUCCESS.getValue(), address);
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.FIREBODY_ERROR.getValue(), e);
 		}
@@ -97,7 +96,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getPhoneAlert(firestation));
-			logger.info(EActionsProceedConstants.PHONEALERT_SUCCESS.getValue(),firestation);
+			logger.info(EActionsProceedConstants.PHONEALERT_SUCCESS.getValue(), firestation);
 
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.PHONEALERT_ERROR.getValue(), e);
@@ -126,38 +125,35 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 	public ResponseEntity<Void> addPerson(PersonReq body) {
 		try {
 			personPostService.addPerson(body);
-			logger.info(EActionsProceedConstants.ADDING_PERSON_SUCCESS.getValue(), body.getFirstName(),body.getLastName());
+			logger.info(EActionsProceedConstants.ADDING_PERSON_SUCCESS.getValue(), body.getFirstName(), body.getLastName());
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.ADDING_PERSON_ERROR.getValue(), e);
 		}
 
-		return PersonApi.super.addPerson(body);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-
-
-
-
 
 	@Override
 	public ResponseEntity<Void> deletePerson(String firstName, String lastName) {
 		try {
-			personPostService.deletePerson(firstName,lastName);
+			personPostService.deletePerson(firstName, lastName);
 			logger.info(EActionsProceedConstants.DELETING_PERSON_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.DELETING_PERSON_ERROR.getValue(), e);
 		}
-		return PersonApi.super.deletePerson(firstName, lastName);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+
 	@Override
 	public ResponseEntity<Void> updatePerson(String firstName, String lastName, PersonReq body) {
 		try {
 			personPostService.updatePerson(body);
 			logger.info(EActionsProceedConstants.UPDATING_PERSON_SUCCESS.getValue(), firstName, lastName);
 		} catch (Exception e) {
-		logger.error(EActionsProceedConstants.UPDATING_PERSON_ERROR.getValue(), e);
+			logger.error(EActionsProceedConstants.UPDATING_PERSON_ERROR.getValue(), e);
 		}
 
-		return PersonApi.super.updatePerson(firstName, lastName, body);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@Override
@@ -180,7 +176,7 @@ public class PersonController implements AddPersonsApi, ChildAlertApi, PhoneAler
 
 		try {
 			response = ResponseEntity.ok(personGetService.getCityMailingList(city));
-			logger.info(EActionsProceedConstants.COMMUNITYEMAIL_SUCCESS.getValue(),city);
+			logger.info(EActionsProceedConstants.COMMUNITYEMAIL_SUCCESS.getValue(), city);
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.COMMUNITYEMAIL_ERROR.getValue(), e);
 		}

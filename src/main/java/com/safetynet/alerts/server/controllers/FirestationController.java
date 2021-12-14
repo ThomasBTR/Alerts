@@ -12,6 +12,7 @@ import io.swagger.model.Firestations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
-public class FirestationController implements AddFirestationsApi, StationNumberApi{
+public class FirestationController implements AddFirestationsApi, StationNumberApi {
 
 	@Autowired
 	protected HttpServletRequest request;
@@ -83,7 +84,7 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.ADDING_FIRESTATION_ERROR.getValue(), e);
 		}
-		return StationNumberApi.super.addFirestationMappingToSpecifiedAddress(address, stationNumber);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.UPDATING_FIRESTATION_ERROR.getValue(), e);
 		}
-		return StationNumberApi.super.updateFirestationMappingToSpecifiedAddress(address, stationNumber);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@Override
@@ -105,6 +106,6 @@ public class FirestationController implements AddFirestationsApi, StationNumberA
 		} catch (Exception e) {
 			logger.error(EActionsProceedConstants.DELETING_FIRESTATION_ERROR.getValue(), e);
 		}
-		return StationNumberApi.super.deleteFirestationMappingToSpecifiedAddress(address, stationNumber);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
